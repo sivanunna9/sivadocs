@@ -26,7 +26,7 @@ $ usermod -a -G nagcmd nagios
 $ usermod -a -G nagios,nagcmd www-data
 
 Download and extract the Nagios core
-$ wget https://assets.nagios.com/downloads/n...
+$ wget https://assets.nagios.com/downloads/nagioscore/releases/nagios-4.2.0.tar.gz
 $ tar -xzf nagios*.tar.gz
 
 You will have to configure it with the user and the group you have created earlier
@@ -43,7 +43,7 @@ $ cp -R contrib/eventhandlers/ /usr/local/nagios/libexec/
 $ chown -R nagios:nagios /usr/local/nagios/libexec/eventhandlers
 
 Install the Nagios Plugins
-$ wget https://nagios-plugins.org/download/n...
+$ wget https://nagios-plugins.org/download/nagios-plugins-2.2.1.tar.gz
 $ tar -xzf nagios-plugins*.tar.gz
 
 Install the Nagios plugin's with the commands below
