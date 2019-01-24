@@ -1,0 +1,43 @@
+ ======= Development and Deployment Workflow ========
+
+Step 1.
+------
+User Story (Means:Requirment document, what n How to build the project, Which teams are involved, decide Time for build application)
+	  
+Step 2.
+------
+Sprint Planning (Using JIRA or any other tool) Task designing for required team and others fellow team member.
+
+Step 3.
+------
+ 3A. -If the project is new THEN create new repository in GIT, after in new repo there is MASTER_BRANCH, 
+     -in MASTER_BRANCH define project working structure nd push this project in MASTER_BRANCH. 
+ 			   ---- 
+ 3B. -After committing project in MASTER_BRANCH, create one DEV_BRANCH from MASTER_BRANCH.
+  
+ 3C. -After DEV_BRANCH create some FEATURE_BRANCHS(1,2,3,...etc.) from DEV_BRANCH regarding tasks nd requirment. In this branch developer doing all work regarding project and push into this branch.
+  
+
+Step 4.
+------
+-Then deploying FEATURE_BRANCH on Dev_Environment nd testing team test FEATURE_BRANCH on Dev_Environment(its office local environment), 
+-if everything will be fine on Dev_Environment, then testing team giving signoff to FEATURE_BRANCH.
+
+Step 5. 
+------
+-After signoff to FEATURE_BRANCH, FEATURE_BRANCH merge into DEV_BRANCH, now DEV_BRANCH deploying on UAT_Environment,
+-if everything will be fine on UAT_Environment, then testing team giving signoff to DEV_BRANCH.
+
+Step 6.
+------
+-After signoff to DEV_BRANCH, create RELEASE_BRANCH from DEV_BRANCH, then RELEASE_BRANCH deploying on Pre-Production_Environment,
+-testing team doing some test on Pre-Production_Environment, 
+-if everything will be fine on Pre-Production_Environment, then testing team giving signoff to RELEASE_BRANCH.
+
+Step 7.
+------
+Now This RELEASE_BRANCH deploying to Production_Environment and then RELEASE_BRANCH merge into master branch.
+
+ ======================== PROCESS END APPLICATION IS LIVE =========================================   
+
+ 

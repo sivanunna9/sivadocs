@@ -1,0 +1,31 @@
+Jenkins Installation steps
+
+step1 :- create a docker container like jenkinsserver and tomcat server(172.17.0.2 & 172.17.0.3)
+step2 :- install -$ apt-get install openssh-server in both container
+step3 :- create addusers in both containers [adduser --home /home/satya --shell /bin/bash satya ]
+step4 :- start the ssh-server $ service ssh start/status/stop
+
+step5 :-1. download JDK to host machine and that JDK file copy to jenkinssever container [ scp JDK.tar.gz ssh satya@172.1.0.2:Path location]
+	2. download Tomcat and Maven [weger path & extract that file ]
+        3. apt-get install vim & create a environment variable [ export M2_HOME=/home/jenkins/Distors/apache-maven-3.6.0 ]
+                                                               [ export JAVA_HOME=/home/jenkins/Distors/jdk1.8.0_191 ]
+                                                               [ export PATH=$M2_HOME/bin:$JAVA_HOME/bin:$PATH ]
+
+	3. download jenkins.war
+	4. copy jenkins.war to $TOMCAT_HOME/webapps
+		[deploying jenkins to tomcat]
+	5. start Tomcat server using $TOMCAT_HOME/bin/startup.sh
+	6. Launch Jenkins using below URL
+				http://localhost:8080/jenkins	
+	7. command to shutdown tomcat:
+			$TOMCAT_HOME/bin/shutdown.sh
+step7 :- create a project in jenkins website like gamutkart ,give git hub url and give maven install and apply and save.
+step8 :- click the build now option and check the console output
+step9 :- Go to confige option and click on build option give eshell
+
+scp syntax:
+===========
+sshpass -p "gamut" scp gamutkart.war gamut@172.17.0.2:/home/gamut/Distros/apache-tomcat-8.5.11/webapps
+
+step9 :- click the build now option and check the console output
+step10 :- check the war file in tomcat server like gamutkart.war

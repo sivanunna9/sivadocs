@@ -1,0 +1,147 @@
+﻿INTERVIEW QUESTION:
+=====================
+1.What are the differences between ANT and Maven
+
+2.How do you create a jar/war file in Maven?
+
+ using $ mvn install command 
+
+3.What is the  difference between mvn deploy and install?
+
+mvn deploy command will deploy or copies war/jar into remote repository like nexus wehre as mvn install command will copies jar/war in to local repository like .m2 repository 
+
+4.Can you explain Maven's lifecycle?
+		'mvn install' command executes below maven "build life cycle" phases automatically. 
+	- validate
+		validate project's structure
+	- initialize
+		prepares project with initial pre-
+		requisites ex: setting properties, creating 
+		necessary directory structure..etc.		 
+	- compile
+		compiles "main" java code.
+	- test-compile
+		compiles "test" java code
+	- test
+		Runs the test cases.
+	- package
+		creates jar/war.
+	- install
+		copy built artifacts to local repository .m2/repository/groupId/artifactId/version/jar(or..war file)
+        - deploy 
+           The final package will be copied to a remote repository, may be as a formal release and also made available to the other developers too.
+
+	[Give one line explanation about each phase during your interview]
+
+5.What is Maven? Why we use Maven?
+1. Maven a “build tool”: a tool used to build deployable artifacts from source code.
+2.Maven is a project management tool which encompasses a project object model, a set of standards, a project lifecycle, a dependency management system, and logic for executing plugin goals at defined phases in a lifecycle
+3.Maven can then apply cross-cutting logic from a set of shared (or custom) plugins.
+
+
+6.While building the project, you get an error saying some jar file is missing. how do you add that?
+ we can the dependency in the pom.xml file.
+7.What is groupId, artifactId, and Version in Maven?
+ 
+artifactId - project name
+groupId - packagename 
+version - project version
+
+8.What are the Maven co-ordinates?
+
+Maven co-ordinates GAV parameters
+
+9.What are the mandatory attributes in pom.xml.
+
+GroupId, artifactId, and Version 
+
+10.What is the difference between 1.0-SNAPSHOT(SNAPSHOT) version and 1.0-RELEASE(RELEASE) version.
+
+In case of Version, if Maven once downloaded the mentioned version say data-service:1.0, it will never try to download a newer 1.0 available in repository. To download the updated code, data-service version is be upgraded to 1.1.
+
+In case of SNAPSHOT, Maven will automatically fetch the latest SNAPSHOT (data-service:1.0-SNAPSHOT) everytime app-ui team build their project.
+
+
+
+11.What is the default naming convention of an artifacts(jar/war) in Maven?
+Package naming convention:
+	artifactId-version.jar
+
+
+12.How do you generate a site in Maven?
+- using mvn site 
+13.How do you run a clean build in Maven?
+ -mvn clean
+14.how do you add a dependency in Maven pom.xml?
+
+ Go to the pom.xml file and add the required dependency in dependiencies.
+
+15.what is a plugin?
+ Really just a plugin execution framework where every task is actually done by plugin.
+ a plugin generally provides a set of goals,which can be executed using folling syntex 
+    mvn [plugin-name]:[goal-name]
+   for example mvn complile:complie()
+Plugins are dynamically downloaded and installed.
+
+16.What is the default path of artifacts in local repository?
+ $USER_HOME/.m2/repository/groupId/artifactId/version/jar_or_war_file_name
+17. Where maven stores the built artifacts? 
+ $USER_HOME/.m2/repository/groupId/artifactId
+
+18.How do you create a project in the Maven?
+Creating a Java Project using Maven:
+mvn archetype:generate -DgroupId=com.gamutkart -DartifactId=gamutkart -Dversion=1.0-SNAPSHOT -DinteractiveMode=false
+
+Create Maven web application project usgin below command.
+$ mvn archetype:generate -DgroupId=com.flipkart -DartifactId=flipkart -Dversion=1.0-SNAPSHOT -DinteractiveMode=false -DarchetypeArtifactId=maven-archetype-webapp
+
+19.What are the different binary repositoris we have? Which one you are using for your project?
+
+Maven repositories
+	- Central
+	- Private/Remote (Nexus/atifactrory)
+	- Local (.m2)
+
+
+20.How do you customize the name of your artifact(jar/war) in Maven?
+         <build>
+                <finalName>gamutkart</finalName>  (only target folder naming convention will change)
+        </build>
+        
+
+21.How do you change the name of built jar/war file in maven? what changes you need to do in pom.xml file?
+   <build>
+                <finalName>gamutkart</finalName>   (only target folder naming convention will change)
+        </build>
+
+22.What do you mean by transitive dependency in Maven and can you explain how maven resolves it?
+ maven have capability to get transitive dependency it, means hamrest.jar is dependency of Junit and becomes transitive dependency for our project
+It means to directly specify the versions of artifacts to be used when they are encountered in transitive dependencies. For an example project C can include B as a dependency in its dependencyManagement section and directly control which version of B is to be used when it is ever referenced.
+
+23.What is the significance of scope parameter in dependency section?
+This scope is used to limit the transitivity of a dependency, and also to affect the classpath used for various build tasks.
+
+The <scope> element can take 6 values: compile, provided, runtime, test, system and import.
+
+24.What are the different scope's we have in Maven?
+
+ Dependency scope includes dependencies as per the current stage of the build. Various Dependency Scopes are −
+
+compile − This scope indicates that dependency is available in classpath of project. It is default scope.
+
+provided − This scope indicates that dependency is to be provided by JDK or web-Server/Container at runtime.
+
+runtime − This scope indicates that dependency is not required for compilation, but is required during execution.
+
+test − This scope indicates that the dependency is only available for the test compilation and execution phases.
+
+system − This scope indicates that you have to provide the system path.
+
+import − This scope is only used when dependency is of type pom. This scope indicates that the specified POM should be replaced with the dependencies in that POM's <dependencyManagement> section.
+
+
+25. if want more maven interview qu & aws
+
+https://mindmajix.com/maven-interview-questions
+https://www.tutorialspoint.com/maven/maven_interview_questions.htm
+

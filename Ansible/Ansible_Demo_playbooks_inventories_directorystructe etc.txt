@@ -1,0 +1,257 @@
+
+
+Ansible Directory Structure ( Roles Not Included )
+
+.
+├── ansible.cfg					--> Very important file. this can be used to add inventory file location and few other defaults. check etc/ansible/ansible/cfg for more details
+├── test.war					--> pickup some war file from google or github
+├── gamutkart_deployment.yml	--> our deployment playbook
+├── inventories					--> inventory directory where we have group vars and host information
+│   ├── deployment				--> project gamut
+│   │   ├── gamutkart			--> host file
+│   │   └── group_vars			
+│   │       └── all				--> variables
+│   └── local					--> local deployment 
+│       ├── group_vars	
+│       │   └── all				--> variables
+│       └── hosts				--> host file
+├── javainstallation_withrole.yml	--> Playbook with role to install Java
+├── local.yml						--> playbook to run locally
+├── sample_declarationof_inventory.yml  --> way of declaring hosts
+├── templates						--> directory to store files/scripts/j2
+│   ├── server.xml					--> sample file
+│   └── web.xml
+└── tomcatinstallation.yml			--> tomcat installation with out Role
+
+22 directories, 35 files
+
+
+---------------------------------------------------
+
+
+sample ansible.cfg
+[defaults]
+
+inventory = inventories/deployment/gamutkart
+host_key_checking = false
+command_warnings = false
+
+--------------------------------------------------
+
+gamutkart_deployment.yml ( change location of war file)
+
+---
+
+-  hosts: gamutservers
+   remote_user: ubuntu
+   become: true
+   become_method: sudo
+
+
+   roles:
+     - ansible-role-java
+
+   tasks:
+
+     - name: Stop Tomcat service
+       service:
+         name: tomcat8
+         state: stopped
+
+     - name : create gamutkart directory
+       file:
+         path: /home/ubuntu/gamutkart
+         state: directory
+
+     - name: Fetch the Current datetime
+       shell: echo `(date +"%d%m%Y%H")`
+       register: CURRENT_DATETIME
+
+     - name: create backup directory
+       file:
+         path: /home/ubuntu/backup/warfiles/{{ CURRENT_DATETIME.stdout }}
+         state: directory
+         mode: 0755
+
+     - name: Backup existing war files
+       copy:
+         src: /var/lib/tomcat8/webapps/gamutkart.war
+         dest: /home/ubuntu/backup/warfiles/{{ CURRENT_DATETIME.stdout }}
+         remote_src: true
+       ignore_errors: true
+
+     - name: delete existing war files from webapps directory
+       file:
+         state: absent
+         path: /var/lib/tomcat8/webapps/gamutkart.war
+         state: absent
+         remote_src: true
+
+     - name : copy war file from CN to MN
+       copy:
+         src: /home/ubuntu/ansible/projects/gamutkart1/gamutkart.war
+         dest: /var/lib/tomcat8/webapps
+
+     - name: Start Tomcat service
+       service:
+         name: tomcat8
+         state: started
+
+     - name: pause for 10 seconds
+       pause:
+         seconds: 10
+
+     - name: wait for tomcat service to start
+       wait_for:
+         port: 8080
+
+     - name: Check HTTP Service
+       uri:
+         url: http://{{ipaddress}}:8080/gamutkart
+         status_code: 200
+       ignore_errors: true
+
+     - name: link to access application
+       debug:
+         msg: http://{{ipaddress}}:8080/gamutkart
+
+
+-----------------------------------------------------------------------------
+
+Inventories --> you have to prepare ( with and without group_vars)
+
+---------------------------------------------------------------------------
+
+javainstallation_withrole.yml ( install role from ansible galaxy)
+
+---
+
+-  hosts: gamutservers
+   remote_user: ubuntu
+   become: true
+   become_method: sudo
+
+
+   roles:
+     - ansible-role-java
+
+...
+
+------------------------------------------------------------------------------
+
+local.yml
+
+
+---
+
+-  hosts: localhost
+   connection: local
+   remote_user: ubuntu
+   become: true
+   become_method: sudo
+
+
+   tasks:
+
+     - name: clone from git
+       git:
+         repo: https://ubuntu@github.com/give your location of war file
+         repo: '{{gitrepo}}'
+         dest: '{{tmpdir}}'
+         version : master
+
+     - name: debug module to pickup ip address
+       debug:
+         msg: "{{ ansible_default_ipv4.address }}"
+
+     - name: debug module to pickup OS Distribution
+       debug:
+         msg: "{{ ansible_distribution }}"
+
+     - name: create a temporary directory
+       file:
+         path: /tmp/ansibletraining
+         state: directory
+       when: ansible_distribution != "Ubuntu"
+
+	   
+---------------------------------------------------------------------------------------------
+
+		sample_declarationof_inventory.yml
+
+
+[webservers_dns]
+bng.gamut.com
+chennai.gamut.com
+
+[webservers_ip]
+192.1.1.0
+192.1.1.1
+
+
+[webserver_dns+ip]
+bng.gamut.com
+192.1.1.0
+
+[onemoregroup]
+bng.gamut.com
+chennai.gamut.com
+192.1.1.0
+192.1.1.1
+
+[onemoregroup:children]
+webservers_dns
+webservers_ip
+
+
+[wwgrooup:children]
+webservers_dns
+webservers_ip
+webserver_dns+ip
+onemoregroup
+
+[secondgroup]
+192.1.1.0
+192.1.1.1
+192.1.1.2
+192.1.1.3
+192.1.1.4
+192.1.1.6
+192.1.1.7
+192.1.1.8
+192.1.1.9
+
+[secondgroup_inabetterway_withrange]
+192.1.1.[0-9]
+bng[01-100].gamut.com
+
+
+-----------------------------------------------------------------------------------
+
+tomcatinstallation.yml ( without role and using package manager)
+
+
+---
+
+-  hosts: gamutservers
+   remote_user: ubuntu
+   become: true
+   become_method: sudo
+
+
+   tasks:
+
+     - name: install tomcat
+       package:
+         name: tomcat8
+         state: latest
+       tags:
+         - tomcat
+
+     - name: check tomcat status
+       command: service tomcat8 status
+
+...
+
+
+----------------------------------------------------------------------------------------

@@ -1,0 +1,378 @@
+1.)* What is Version Control System(V.C.S.)?
+
+    - GIT is V.C.S. for tracking changes in computer files and coordinating work on those files among multiple people.
+    - It is primarily used for source code managemnt in software development, but it can be keep track of changes in any set of files. 
+
+
+2.)* Why we need any Version Control System(v.C.S)?
+    - It allows you to revert files back to a previous state, revert the entire project back to a previous state, compare changes over time, see who last modified something that might be causing a problem,
+       who introduced an issue and when, and more.
+
+    - Using a VCS also generally means that if you screw things up or lose files, you can easily recover. 
+
+
+3.)* What is the difference between SVN and Git?
+   
+1.
+	SVN is a centralised version control system. In svn, when a user checkout’s the repository, he will get only the source code. Repository is not distributed to the user. In SVN multiple users connect to a single/centralized server. If that server goes down, no user will be able to work.
+
+	Where as Git is distributed VCS. In the sense, when user clones the repository, he will get source code as well as complete repository on his local disk. since repository is distributed across multiple users and each user has their own local repository, user will be able to submit the changes locally without connecting to the master server. (i.e he can also work offline)
+
+2.
+Git has staging area. Users can leverage this staging area to stage/save all the changes related to some issue/bug and  commit everything at once into local repository. hence, all the changes will be recorded as part of single sha/commit. user's get an opportunity to logically group the changes and commit as single changeset. this enables better tracking.
+
+3.
+Since git is distributed in nature, almost all transactions happen locally in the client machine and hence less overhead on the server so git is faster.
+Users are free to create any no. branches in Git. where as in svn, all branches reside in server side, so may cause svn to be overloaded with multiple requests.
+
+4.
+Git seems to be good with merging.
+
+5.
+Git stores each change as SHA values but SVN uses simple numbers as revisions.
+
+                                           ****************or****************
+
+               SVN                                                                                    GIT 
+             -------                                                                                 ------   
+             1. CVCS                                                                             1. DVCS
+             2. No local repository                                                              2. It has local repository                  
+             3. There is no staging area                                                         3. There is staging area
+             4. There is no branching concept                                                    4. There is branching concept
+             5. Internet is required                                                             5. Internet is not required 
+             6. Simple number                                                                    6. SHA Value
+
+4.)* Which VCS you prefer? SVN Or Git? Why?
+  
+  - GIT, Most operations in Git only need local files and resources to operate — generally no information is needed from another computer on your network. 
+  - If you’re used to a CVCS means(SVN) where most operations have that network latency overhead.
+  - Because you have the entire history of the project right there on your local disk, most operations seem almost instantaneous.
+
+5.)* What are the advantages of Git over SVN?
+
+   - Initialization - The git init is the command to create local repository. It can be used to convert an existing, unversioned project to a Git repository or initialize a new empty repository. 
+                      Subversion uses svn import command to create initial repository.
+
+- Creating working copy - The git clone command creates a copy of the repository for modification. It is similar to svn checkout command.Unlike SVN, 
+- Git makes no distinction between the working copy and   the central repository—they are all full-fledged Git repositories. 
+- All the changes that are made in the working copy are committed in the local repository, not with central repository as done in svn. 
+- The communication is mostly local and this helps improve performance and avoiding locking issues.
+- Committing changes in original repository - The changes are put back in original repository by git pull or git push commands depending upon where the command is executed.
+- Staging area - This is unique feature of Git. It is called index. It is kind of temporary area where the changes could be reorganized before committing to the repository. 
+                    This is an additional layer in addition to working copy and repository. 
+                    Once you are satisfied the changes can be committed.
+
+
+6.) Why we call Git as Distributed VCS?
+   
+   - In a DVCS(such as Git, Mercurial, Bazaar or Darcs), clients don’t just check out the latest snapshot of the files: they fully mirror the repository. Thus if any server dies,
+     and these systems were collaborating via it, any of the client repositories can be copied back up to the server to restore it. Every checkout is really a full backup of all the data.
+
+
+7.) Can you explain Git's End-to-End work flow?
+
+  -1. creating the remote repository in Git hub.
+   2. clone the remote repository in localsystem , using git clone commmand.
+   3. create the some project files in source area and add to the stage area, using git add command.
+   4. commit the all created file from stage area to local repository, using git  commit -m "files added".
+   5. push the all created files from local repository to remote repository, using git push command.
+   
+
+8.) How do you clone the code using git?
+
+  - we can clone the code using this command git clone repo url
+						      ----------
+
+
+9.)* What is the difference between Commit & Push?
+
+  - This command git commit is moving data or files from stage area to local-repo (.git) area.
+                 ----------                              ----------    ----------
+  - This command git push is moving data or files from local-repo(.git) to remote area.
+                 --------                             -----------          ------
+
+
+10.)* What is the difference bet'n Push and Pull?
+
+   - This command git push is moving data or files from local-repo(.git) to remote area.
+                 --------                             -----------          ------
+   - git pull fetches any new work that has been pushed to that server since you cloned (or last cloned from) it. It’s important to note that the pull command pulls the data to your local repository.
+    ---------                                                   ------                           
+
+11.) Can you explain Git architecture?
+              
+                GIT
+   -       ---------------
+	  |   flipkart    |
+	  | --------------|--------> Source code + Meta data  
+	  |  |10K files|  |--------> Remote Repository.
+	  |  ----|-----   |
+           -------|--------
+		  |
+	----------------------------
+       |Source   |  Stage   |  .git | ---------> local Repository, Source code.
+        ----------------------------
+
+12.)* What is the diff. bet'n Centralized and Distributed VCS.
+               SVN                                                                                    GIT 
+             -------                                                                                 ------   
+             1. CVCS                                                                             1. DVCS
+             2. No local repository                                                              2. It has local repository                  
+             3. There is no staging area                                                         3. There is staging area
+             4. There is no branching concept                                                    4. There is branching concept
+             5. Internet is required                                                             5. Internet is not required 
+             6. Simple number                                                                    6. SHA Value
+
+   
+13.) Have you ever created Remote repositories in Git? How?
+   
+    - We can create repository using two ways:-
+      a) login to github account and click to new repository option and enter reqired name and create it.
+      b) Using git init we can create local repository and push it to central repository.
+
+14. What happens if I delete .git folder?
+   - If we delete the .git folder, so we can't perform any git operations because .git is a local repository.
+   - suppose if we delete the .git folder and we want the .git folder, using git init command it will revert.
+15. How do you configure username, email and editor first time 
+    in Git?
+ $ git config --global user.name "sivanunna9"
+ $ git config --global user.email "sivagopikishoren@gmail.com"
+
+16. Where Git stores configuration details?
+ "/home/gamut/.gitconfig"
+
+17.What is the meaning of stage in git?
+
+Staging is a step before the commit process in git. That is, a commit in git is performed in two steps: staging and actual commit. As long as a changeset is in the staging area, git allows you to edit it as you like (replace staged files with other versions of staged files, remove changes from staging, etc.)
+
+17.* What is the advantage of STAGE in Git?
+
+The benefit is quite simple: it gives you full control over which files you want to commit when. For that matter, you can use git add -p to control which lines you want to commit. One of the benefits that I like is the ability to commit a portion of a change.
+
+18. Git log options related questions
+	--author "name" :- This command show author commit history.
+
+	--grep "msg/string" :- This command is useful for searching particular string/msg. (EX. git commit -m "stage")
+ 
+	--oneline :- This command is useful to see only commit ids and message.
+
+	--since "Date"(2018/12/22) :- This command shows commit history from given date. 
+	
+	--until "Date"(2018/12/22) :- This command shows commit history till given date.  	 	
+
+	--follow file_name :- This command shows history of the old file.
+
+	-n2 :- It shows only last two commits.
+
+19. What is SHA-1? How Git uses this?
+   Everything in git is check-summed before it is stored and is then referred to by that check-sum.
+   The mechansim that git uses for this checksumming is called as SHA-1 Hash Algorithm.
+   This is a fourty character string composed of hexa decimal character(0-9 & a-f) and calculated based on the contents of a file or directory  structure in git 
+
+  SHA-1 hash looks something like this :732bbd12c96c86e123660e1ef0948474b1881ca5
+
+
+20.)* I have a file modified in my Working directory. How do you show the content diff?
+
+     - git diff command filename.
+                        -------- 
+
+21.* How do you show the content diff of a file which is staged?
+
+    - git diff --staged filename.
+			--------
+
+22. How do you delete and rename a file in Git?
+
+    - git rm filename. (It is remove/delete file from GIT) 
+             --------
+    - git mv filename  new_file_name
+             --------  -------------
+
+23.** What is your branching stratogy?
+	Can you explain your release process/Stratogy?
+
+    - Refer Development to Deployment file.
+ 
+
+24.** What branching model you suggest for parellel development?
+
+    -  **************
+
+
+25. Developer fixes a bug. How do you take the change to 
+    production?
+
+   -1. create hot-fix branch from Release-branch and fix the bug in the hot-fix branch and test hot-fix branch on all enviorments if it's fine then deploy this branch into the productione 
+  2. Then merge the hot-fix branch into master branch.
+
+
+26.** Explain defferent branching models that you have worked-on.
+    
+    - Working only on one branch model.
+   -Refer Development to Deployment file.
+
+
+27. Did you work on merging the code in Git?
+    
+    - no because my senior persons are taking responebility for that.
+
+
+28.* How do you merge the code in Git?
+
+    - Our developer uses the source-tree tool for merging code.
+
+
+29.* What is merge? 
+
+Combine two branch into one branch it is called merge, using git merge command.
+
+
+30. What is conflict? or When do we get conflict?
+
+If two users modify the same file in source and target branches and if the same line has different content, git can't decide which user's code it has to take. we call this situation as conflict.
+
+
+31.* What is fast-forward merge in Git? 
+
+     # FAST-FORWARD MERGE
+
+BEFORE MERGE:
+-------------
+1. In master branch we have ---C1--C2---C3, now we are creating the new branch i.e dev_1.2.3, in this branch we created new files i.e --C4----C5 , now we are merging this files into master branch, using git merge dev_1.2.3 it is called  fast-forward merge.
+
+			master
+			 |
+----C1--C2---C3
+			 |
+			 ----------C4----C5  
+								dev_1.2.3
+		
+AFTER MERGE:
+-------------
+ 			     			master
+			     			  |
+----C1----C2---C3------C4----C5     -------------------------> using git merge dev_1.2.3
+		             		  |
+			     			dev_1.2.3
+
+
+
+31.* What is the difference between Merge and Rebase?
+
+************************
+
+32.* How do you resolve the conflit in Git?
+ 
+- Open the conflict file--> remove conflict markers-->select the right content.
+- git add
+- git commit
+
+34.* What kind of conflicts you have seen?
+  - merge conlicts
+ 
+35. Who resolves the conflicts?
+ -developers are resolved the conflicts.
+
+36.** What is the difference between branch and tag?
+37. When do you create a branch and tag?
+*****************************
+
+38. How do you create a branch and switch to that using single command?
+$ git checkout -b dev_1.2.4
+
+39. What is HEAD pointer in Git?
+HEAD is a pointer in git which
+	- Always points to the latest commit in the repository
+	- Always points to tip of the current reposiotory
+	- Always points to parent of the next commit
+
+39.  Where Git store HEAD info.
+     $ /home/sai/Documents/gamutkart2/.git $ vim HEAD ( it will showa the location)
+      
+39. Can we store binary files in Git?
+
+yes,Can we store binary files in Git.
+
+40. Can skip the staging? How? what are the caveats?
+      $ git commit -am "msg" 
+
+41.* How do you list files/folders modified as part of a commit?
+$ git show <SHA> ( it show whole info about commit with contents and files names )
+$ git show <SHA>
+$ git diff-tree no-commit-id --name-only -r <SHA>
+
+
+42.* How do you ignore: ex:
+	all files ending with .class
+	all files having alphanumeric
+	all log files but not build.log
+
+ -/home/sai/Documents/gamutkart2/.git $ vim .gitignore  *.class
+
+43. How do you add ignore list for all users?
+   
+-/home/sai/Documents/gamutkart2/.git $ vim .gitignore  *.class
+
+
+44.* What are the different files you ignore in your project?
+
+-/home/sai/Documents/gamutkart2/.git $ vim .gitignore  *.class ( because file size is big )
+
+45. How to remove a committed change? Or can we remove?
+		$ git reset --hard HEAD~1
+		$ git reset --soft HEAD~1
+46. How do you lock the branch
+ *********************************
+47. How do you clone the code from a particular paticular branch?
+$ git clone -b dev_1.2.3 --single-branch https://github.com/sivanunna9/flipkart.git
+48. How do you restore a deleted file? Or previous changes of a file?
+1. $ git log --diff-filter=D --summary ( here will get SHA of deleted file using this command )
+2. $ git checkout $commit<SHA VALUE>~1 filename (Here will restore the deleted file )
+3. $ git status
+
+49. How do you list the diff. of a file between two different 
+	branches.
+		$ git diff dev_1.2.4...master -- LoginUser.java
+
+50. How do you list the changes which are going to be fetched? 
+method:1		
+		$ git fetch		
+		$ git log origin/master ^master
+method:2
+		$ git fetch && git diff master origin/master --name-only
+
+51. What is Git Stash?
+
+Often, when you’ve been working on part of your project, things are in a messy state and you want to switch branches for a bit to work on something else. The problem is, you don’t want to do a commit of half-done work just so you can get back to this point later. The answer to this issue is the git stash command.
+
+https://git-scm.com/book/en/v1/Git-Tools-Stashing
+
+52. How do you add a new remote to git? Or How do you attach your local repo with remote?
+$ git init
+
+53. What is git ls-tree?
+	git ls-tree <sha> --> Lists files committed as part of a commit.
+
+54. git cherry pick 
+
+$ git cherry pick <SHA value> ( if we have two branches like maser and dev_1.2.3 in dev branch we have 2 files like aa.java bb.java git add aa.java git add bb.java and commits the files induvidualy and git log and switched to master branch and give git cherry pick first file SHA value and second file SHA value , those files will added into master branch)
+
+
+
+
+
+
+
+
+=========================
+1.git cherry pick 
+2.git squash  
+3.git bi-sect
+4.git blob
+5.git blame
+6.git fork
+7.git web-hooks
+
+
+

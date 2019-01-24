@@ -1,0 +1,40 @@
+0. Install Docker
+	refer docker official installation web page
+
+1.
+create a new container for QA environment:
+$ docker run -it --name tomcat1-qa -d 	 nageshvkn/node2 /bin/bash
+
+Note: "nageshvkn/node2" is docker image created by Gamut for Jenkins to master/slave node
+and deployments.
+
+2. Login to "tomcat1-qa" server
+$ docker attach tomcat1-qa
+
+
+3. shutdown the container(tomcat1-qa)
+$ exit
+
+
+4. start the container(tomcat1-qa)
+$ docker start tomcat1-qa
+$ docker attach tomcat1-qa
+
+Note:
+1. Once container is created make sure that password is setup for 'gamut' user.
+ $ passwd gamut
+
+2. run below command if you see permission denied error while deploying to change the permission 
+   for a remote directory 
+
+$ chmod 777 -R apache-tomcat-8.5.23
+
+5.
+Remove a single container
+$ docker rm <container_name>
+
+6. List all containers
+$ docker ps -a
+
+7. 
+ 

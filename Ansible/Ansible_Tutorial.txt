@@ -1,0 +1,394 @@
+
+##Pre-Requisites
+	Version Control System Knowledge
+	Linux Commands
+	What is Deployment and how Deployments are been done 
+	What is CI and CD
+	What is Infrastructure 
+	What is Environment ( Provisional Store ) - Machines, We need Network, Storage, X, y Z 
+	What is Provisioning ( Customer Needs is Provisioning ) Install and Configure
+	Gamutkart.com
+	Java, MYsQL, Maven, someother 
+
+## What is Ansible
+Ansible is a modern IT automation tool which makes your life easier by managing your servers for you. You just need
+to define the configuration in which you are interested and ansible will go ahead and do it for you, be it installing
+a package or configuring a server application or even restarting a service. Ansible is always ready to manage your
+servers.
+
+## Why do we need Ansible
+
+Managing a infrastructure/environment is easy. Managing 5 is do’able. Managing hundreds or more is a painful task without automation.
+Ansible is designed to be simple and effective. You can create identical, replicable servers and clusters of servers in a
+painless and reliable manner
+
+## Ansible offerings
+
+Configuration Management
+Deployments
+Provisioning
+Orchestration :: Different tasks on different hosts
+
+## Why use Ansible
+
+It is a free open source application by RedHat
+It is Idempotent which is extremely important and useful 
+Cross Platform Support --> Installed ansible in Ubuntu ---> deployments to be done in CentOs/Fedora/RHEL/Windows
+Agent-less Architecture 
+Highly flexible and configuration management of systems
+Large number of ready to use modules for system management 
+Custom modules can be added if needed
+Configuration roll-back in case of error 
+Simple and human readable as it follows YAML langauge
+Easy to manage in VCS and easy also easy to build CI pipeline
+Self documenting
+
+
+Installation of Ansible
+
+$ sudo apt-get update
+$ sudo apt-get install software-properties-common
+$ sudo apt-add-repository --yes --update ppa:ansible/ansible
+$ sudo apt-get install ansible
+
+## Ansible Architecture
+
+sudo apt-get install ansible
+
+Ansible.cfg
+	This the location where all configuration settings can be managed
+	Default location is /etc/ansible/ansible.cfg
+	/opt/gamut/deployments --> place all our ansible configurations
+	
+	Precedence
+	1. ANSIBLE_CONFIG		--> create ansible.cfg file and export ANSIBLE_CONFIG=location of file
+	2. ./ansible.cfg
+	3. ~/.ansible.cfg
+	4. /etc/ansible/ansible.cfg
+	
+	
+	
+	Main sections are --> 
+						Defaults :: most of settings listed here ( inventory, remote_user, ask_pass etc )
+						Privilege Escalation :: like Sudo. Defines operations that require escalated privileges in managed hosts for "Unprivileged user"
+												become=true (non-privileged user)
+												become-method=sudo
+												become-user=root
+												become-ask-pass=false
+						Paramiko-connection, SSH-connection, Accelerate :: settings to optimize connections to managed hosts
+						Selinux :: SeLinux Settings
+Control Nodes --
+	Managed by Admins which has copies of all projects. 
+	Control Node will run playbooks.
+	Control Node is the Ansible Server
+	
+Managed Hosts --
+    server will have an IP 11.22.33.111 or DNS bng.gamut.com
+	These are servers listed in the host file
+	Servers can be clustered and can be in groups for easy deployments
+	Authorized_key Module with ask-pass option
+	
+Modules -- 
+	Every action ( task ) which needs to take place from Control Node to Managed Node is done using Ansible Modules
+	Hundreds of supported modules are already available for Linux/Windows.
+	Custom Modules can also be built using Python
+	Modules will inturn have actual tasks they have to perform
+	ansible-doc -l ( lists all modules installed )
+
+	Location of all Ansible Modules ::
+		https://docs.ansible.com/ansible/latest/modules/modules_by_category.html
+
+YAML
+	should start with three -
+	end with three .
+	No tabs
+	follows strict indendation, always by 2 spaces
+	follows key value pair model. eg training: ansible
+	Strings can be without quotes, single quotes and double quotes
+	\n characters should be in double quotes
+	integers are automatically interpreted, example a = 1
+	integers should not be in double quotes, if it is then it is a string
+	list represened as below
+		- example 1
+		- example 2
+	
+	ansible-playbook abc.yml --syntax-check
+
+
+Inventories -- 
+	Managed hosts are defined in inventories
+	Inventories can be Static or Dynamic. 
+		Dynamic inventories 
+			Few examples of Dynamic Inventories --> DB, Docker Containers, AWS Public IPs, New Infra with provisioning
+			achieved by using external scripts, these scripts are not officially supported by RedHat
+	Location of inventory files can be defined in Ansible.cfg file or while execution of playbook
+	Inventories can be classified into groups and few examples below
+	
+	/opt/gamut/deployments ---> project Location
+	inventories
+	abc.yml
+	
+	ansible-playbook -i /opt/gamut/deployments ansibletraining.yml
+	
+	1
+		[webservers_dns]
+		bng.gamut.com  connection=local
+		chennai.gamut.com ansible_user = ubuntu
+	2
+		[appservers_ips]
+		11.22.33.44  port = 2000
+		11.22.33.45
+		
+	3	[databaseservers]
+		bng.gamut.com
+		11.22.44.55
+	
+	4	[wwgroup:children]
+		webservers_dns
+		appservers_ips
+		
+	
+	5	[gamutservers_range]
+		server=bng23.gamut.com
+		bng[01:09].gamut.com
+		bng01.gamut.com
+		bng02.gamut.com
+		bng03.gamut.com
+		etc
+		
+	6	192.168.[4:7].[0:9]
+		192.168.4.0
+		192.168.4.1
+		192.168.4.3 ( 50- 60 ips in this range )
+		
+	7   You can exclude groups as well, for instance, all machines must be in the group webservers but not in the group phoenix:
+		webservers:!phoenix	
+	
+	  
+		
+
+Ansible Facts -- 
+		they are variables that are automatically discoverd by ansible while running playbook. It will run setup module by default
+		Facts contain host specific information that can be used as variables in plays
+		Few facts which will be considered/picked up by ansible from Managed Node::
+		host name, ip address, OS version, various system environment variables, number of CPUs, available disk space etc
+		use cases: 
+			run database update only when available disc space is more than 10GB
+			restart the managed host based on the OS version
+			
+	Gather facts by using below ansible command ::
+				ansible bng01.gamut.com -m setup (setup is the module)
+				can be accessed through debug module
+				
+				hosts: all
+
+  # Task: the list of tasks that will be executed within the play, this section
+  # can also be used for pre and post tasks
+  tasks:
+    - name: Show IP Address
+      debug:
+        msg: "{{ ansible_default_ipv4.address }}"
+		
+	We can have custom facts as well, but they are useful only on control node. default location of facts is /etc/ansible/facts.d
+	if we need these facts in the Managed hosts as well, then we will need to copy this file to the remote machines using file and copy modules
+	##name of file is "date"
+	#!/bin/bash
+	echo [date]
+	echo date=`date`
+	
+	ansible {ip/hostname} -m setup -a 'filter=ansible_local'
+	
+
+	
+	
+	* we can turn off gathering facts by setting them to NO
+				gather_facts: no
+							
+
+	Group-Variables --
+	
+	user = ansible
+	key 	value
+	gamutwarfile = /opt/gamut/softwares
+		
+	Host-variables --> Variable in playbooks are very similar to using variables in any programming language like java, python, shell scripting etc. 
+	It helps you to use and assign a value to a variable and use that anywhere in the playbook
+	These are variables that are declared in the playbook
+	Variables in playbook could be path of particular file or deployment location or any other repeated items
+	Variables are very helpful in managing ansible playbooks in clean and efficient way
+	
+	Host-variables examples --> vars, vars_files ( Yaml or txt), vars_prompt ( private /yes or no)
+	
+	correct naming   :: web_servers, app_servers, webservers
+	Incorrect naming :: web server, web.server or app$server
+	
+	ansible-playbook -i aa/bb/cc -e "{{name}}" ansibletraining.yml 
+	
+	Precedence     --> CMD (Global Scope ) -- playbook ( play Scope ) -- inventories ( Host Scope )
+	Important note --> Playbook should not start with variable. if it starts, then it has to be within quotes.
+	Recommended    --> to define group variables under separate directory and not directly under inventory file/s
+	
+Playbooks --
+
+	Play is set of tasks which should run on hosts as per inventory and sequentially in order
+	Playbook is a set of single or multiple plays
+	Playbook is heart/core feature of Ansible and is an organized unit of scripts that defines work for a server.
+	Playbook is a combination of name, user, hosts, variables, modules, roles
+	Playbooks are human-readable and self documented and they follow yaml syntax
+	Playbooks are run using ansible-playbook command 
+	
+		Sample-simple-playbook:: ansible_test.yml
+		
+		
+		---
+		
+-->		- name : Deployment of file
+		  hosts : gamutservers_range
+		  remote_user: ansible
+		  become:true
+		  become_method: sudo
+		  ask_pass: false
+		  gather_facts:yes/no
+		  
+		  roles:
+          - deploy
+
+		  post_tasks
+		    - name: copy file activity
+			  copy:
+		        src: /opt/gamut/documents/ansible.doc
+			    dest: /tmp/ansible.doc
+				
+			- name: copy file activity
+			  shell : cp /opt/gamut/documents/ansible.doc /tmp/ansible.doc
+			
+			- name : adding line in the ansible.doc
+			  lineinfile:
+			    path: /tmp/ansible.doc
+				line: 'this is for demo'
+				state: present
+				
+			- name: Idempotent approach 
+			  copy:
+			    dest: /tmp/ansible.doc
+				content: 'this will check if file exists, and will not re-write if already exists'
+			
+			- name: start tomcat service
+			  service:
+			    name: tomcat
+				enabled=true
+				state=started
+				
+	** check syntax of playbook :: ansible-playbook --syntax-check ansible_test.yml
+	Important Note --> Shell and Command modules are non-idempotent
+
+---------
+	
+Playbook --> hosts, user information, modules, tasks, roles
+	
+Roles --
+
+	Roles are repeated activities which are common for provisioning/deployment process
+	This simplifies writing complex playbooks, and it makes them easier to reuse
+	Roles are small functionality which can be independently used but have to be used within playbooks.
+	Roles are not playbooks and they cant be independently executed
+	Ansible Galaxy is the place to find roles
+	There are hundreds of predefined roles available in Ansible-Galaxy which can be just used as Plug and Play 
+	Note -- Due diligence of private roles needs to be done before integrating them to the playbooks
+	
+	www.galaxy.ansible.com
+	ansible-galaxy install user.appname
+	by default, place these roles in /.ansible/roles
+	
+	
+
+	
+	We will create playbook
+	we will run playbook
+	and we will install Java using role which is integrated in the playbook
+	
+---------
+
+Creation of CN and MN
+
+Create two EC2 instances/virtual machines -- CN and MN
+Install GIT Maven in CN
+try any sample war file from github
+SSH connectivity Establishment from CN to MN
+You should have atleast 2 machines, one for CN and one for MN
+	Generate RSA pair in CN and MN
+	Copy public key from CN and place in authorized_keys in MN
+	test the connection using SSH (Secure Shell Protocol)
+	
+---------
+
+
+----------
+
+Establish Ansible CN connection to MN
+
+	try ansible all -m ping	
+	add ip of MN to the hosts file
+	Test MN connection by Ansible ping module
+	Check MN requirements
+	Install Python --> sudo apt-get install python
+	try now using 
+		ansible gamutservers -m ping OR
+		ansible all -m ping
+	Now, you have successfully established ansible connection with MN
+
+------------	
+
+			
+		
+		ansible-doc service/file/copy
+		https://docs.ansible.com/ansible/2.7/modules/
+		
+		
+--------------------------
+
+how to start your practice
+IMP : get your basics right and be strong conceptually
+
+
+1. create two machines in AWS free tier account. Else, you can practice Locally 
+2. establish SSH connection between CN and MN --> not applicable if you are practicing locally
+3. update hosts file with new publich IP of MN --> localhost with 127.0.0.1 as IP
+4. test with ansible -m ping all/webservers/ip/dns --> make sure default location /etc/ansible/hosts is also updated
+5. Python will not be installed and hence it will not be able to connect. Why in CN installed by default?--> because Ansible installation will bring dependency Python package as well
+6. Java not installed in MN --> install through CN by ansible-galaxy role
+7. Install Tomcat --> galaxy role
+8. Playbook with roles and deployment script
+9. You may find issues, debug on your own which will give better understanding
+
+-----------------------------------------------
+
+Ansible directory structure
+
+		
+		
+
+------------------------------------------------------
+
+PLAYBOOKS 
+
+LOCAL.yml
+command to execute playbook --> ansible-playbook -i inventories/local/local local.yml -vv
+
+	--------------------------------
+
+gamutkart_deployment.yml
+
+command to execute playbook --> ansible-playbook -i inventories/deployments/gamutkart gamutkart_deployment.yml -vv
+
+-----------------------------
+
+what we learnt -- SUMMARY 
+
+Why Ansible and concepts of Ansible. Ansbile offerings and benefits of using Ansible
+how configuration mgmt and deployments can be done using Ansible
+What is Role and about Ansible-Galaxy
+Ansible-doc for all available ansible modules help
+we learnt how to establish connection from control node ( Ansible server) to managed hosts ( target machines)
+We learnt how and when to use AdHoc commands and seen few ( not all ) adhoc commands. They are run using ansible command
+have seen how to build roles, directory structure and playbooks. Also learnt, how to execute the playbook

@@ -1,0 +1,292 @@
+					MAVEN				
+
+DAY-1:			============
+#1
+	Java Build and Deployment End-To-End Workflow.
+
+#2
+Basics
+	- Java program
+	- manual compilation, jar creation
+
+#3
+What is Maven? Why we need a build tool?
+
+
+#4
+Installation
+	- JDK
+	- Maven
+	- Inspect Maven and JDK installation
+	- Set-up Environment variables for Maven and JDK
+
+Installing JDK and Maven:
+=======================
+  A. create $USER_HOME/.bashrc
+  
+  B. create below Environment variables
+	export M2_HOME=/home/praveen/mavensoftwares/apache-maven-3.3.9
+	export JAVA_HOME=/home/praveen/mavensoftwares/jdk1.8.0_121
+
+	export PATH=$M2_HOME/bin:$JAVA_HOME/bin:$PATH
+
+
+Load .bashrc using below command or open new ternimial
+	$ source .bashrc
+ 
+Verify Installation
+	$ javac -version
+	$ mvn --version
+
+
+DAY-2:
+#2
+Build and Deployment E2E work-flow and basics
+	- What is compilation
+	- Packaging for Java application
+	- What is Build
+	- What is Deployment
+	- Environment
+	- Dev, QA & DevOps teams Interaction and Collaboration.
+
+
+#3
+Maven's standard project layout
+=================================
+Project creation:
+-----------------
+java projects which are created by maven, ideally follows below project folder structure.
+	
+		flipkart
+			|
+			src		pom.xml
+			|
+	main--------- test
+	|				|
+   java		       java
+	|				|
+  (group.Id)	  (group.Id)
+	|				|
+App.java		AppTest.java
+
+
+flipkart - is called "Project name" / "ArtifactID"
+src 	 - Source folder which contains the 
+				application source code
+main	 - Contains application's main functional code
+test	 - Contains application's testing code
+pom.xml  - Maven's build file using which we can
+				configure build steps such as 
+				compilation, jar/war creation,
+				deployments...etc.
+
+#6
+Creating a Java Project using Maven:
+mvn archetype:generate -DgroupId=com.gamutkart -DartifactId=gamutkart -Dversion=1.0-SNAPSHOT -DinteractiveMode=false
+
+DAY-3:
+Building the maven project:
+-----------------------
+Execute "mvn install":
+
+	'mvn install' command executes below maven "build life cycle" phases automatically. 
+	- validate
+		validate project's structure
+	- initialize
+		prepares project with initial pre-
+		requisites ex: setting properties, creating 
+		necessary directory structure..etc.		 
+	- compile
+		compiles "main" java code.
+	- test-compile
+		compiles "test" java code
+	- test
+		Runs the test cases.
+	- package
+		creates jar/war.
+	- install
+		copy built artifacts to local repository .m2/repository/groupId/artifactId/version/jar(or..war file)
+
+#
+Verify Built artifacts:
+--------------------------
+Go to "target" folder and observe below.
+	
+			target
+			  |
+		classes     test-classes	surefire-reports	jar/war file
+
+
+	classes: directory contains compiled class files
+				of main source code
+	test-classes: directory contains compiled class
+				files of test source code
+				
+	surefire-reports: contains test reports.
+
+	flipkart-1.0-SNAPSHOT.jar: jar file of main code
+
+
+#
+Note: first time when we run 'mvn install' command, Maven downloads all missing dependencies into .m2  from maven's central repository.
+So we need to have internet when we run 'mvn install' command first time.
+
+
+# Artifact path in local repository .m2
+# More about local repository
+ $USER_HOME/.m2/repository/groupId/artifactId/version/jar_or_war_file_name
+
+- Package naming convention:
+	artifactId-version.jar
+
+DAY-4:
+#21
+	Maven Automatic Dependency resolution
+	- Direct dependency
+	- Transitive dependency(hamcrest is dependency of junit and transitive dependency of our code)
+
+#22
+Maven way of dependency addition, detection from different repositories
+
+#7
+Maven repositories
+	- Central
+	- Private/Remote (Nexus/atifactrory)
+	- Local (.m2)
+
+
+#10
+"mvn clean" (if you use this command target file will delete)
+
+DAY-5:
+#11
+Build types
+	- Complete build/Clean build/Full build
+	- Incremental build
+	- Nightly build
+	- Daily build
+	- bugfix build (Running without test case's)
+	- adhoc/unplanned/emergency builds (Running without test case's)
+
+#
+Skipping test cases:
+	$ mvn install -DskipTests
+	$ mvn install -Dmaven.test.skip=true
+
+#30
+Where Maven's coordinates/GAV parameters come into picture / helpful?
+	- Decide artifact storage path in local/central/remote
+		repositories
+	- Decide jar/war names.
+	- Define a particula version of the jar file to be
+		downloaded during dependency resolution.
+
+
+--> web app builds
+For WebApps, to generate the war file, use: -DarchetypeArtifactId=maven-archetype-webapp, option as part of 'mvn archetype:generate' command which you have used before for stand-alone application.
+ 
+
+DAY-6:
+#18
+Maven Site
+
+
+
+PROJECT-01 --> Create a web application for flipkart and perform end-to-end build and deployment.
+===========
+#
+Create Maven web application project usgin below command.
+
+$ mvn archetype:generate -DgroupId=com.flipkart -DartifactId=flipkart -Dversion=1.0-SNAPSHOT -DinteractiveMode=false -DarchetypeArtifactId=maven-archetype-webapp
+
+artifactId - project name
+groupId - packagename 
+version - project version
+#
+Build the application using below Maven command
+$ mvn install
+
+#
+Check final artifact i.e flipkart.war file in target directory
+$ ls target 
+
+#
+Prepare tomcat for deployments / installation
+- Download tomcat tar.gz file.
+- Extract
+- Make sure JAVA_HOME environment variable is set.
+
+#
+Deploy flipkart.war into tomcat.
+$ cp flipkart.war $TOMCAT_HOME/webapps
+
+#
+Start tomcat server
+$ $TOMCAT_HOME/bin/startup.sh
+
+#
+Launch application with below URL.
+http://localhost:8080/flipkart
+[http://tomcat_server_name:8080/warfilename]
+
+
+
+PROJECT:2 - GamutKart
+#26
+- Building the War.
+- Deployment into tomcat Server.
+
+- Real time project --> End-to-End Build and Deployment Process:
+=================================
+Login to a remote linux machine:	
+	ssh usr@192.168.1.10
+	
+2.
+Clone gamutkart application source code into the build server from gamutkart github repository.
+	URL: https://github.com/gamutkart/gamutkart.git
+
+3.
+Build gamutkart application using below command.
+	$ mvn install
+
+	When we run mvn install command, by default it will reads pom.xml file and runs the given goal(i.e install). According to Maven's lifecycle, maven executes all required build steps. ex: validate, init, compile, test, package and install...etc.
+	
+mvn install command reads the pom.xml for all build configurations before it executes it's lifecycle build steps. ex: it checks GAV(groupId, artifactId and version), package type(jar,war or ear), downloads the all the required dependencies from central or private repositories and compiles the source by including dependencies in javac compiler classpath.
+
+Based on the package and <finalName> attribute it produces the artifact(jar/war/ear) with given name and installs to .m2/repository/${groupId}/${artifactId}/${version}/${artifactId}-${version}.jar/war/ear.
+
+Assuming it's web application and .war is our final artifact, we need to deploy it to some application server like tomcat to make application accessible by the end user. 
+
+4. 
+Deploy gamutkart.war application to remote server deployment location(i.e $TOMCAT_HOME/webapps) using below command or some shell or automation scripts.
+	scp gamutkart.war gamut-idc-node1@192.168.0.4:/home/gamut-idc-node1/Distros/apache-tomcat-8.5.11/webapps
+
+4A.
+After the deployment, we need start the server using below tomcat startup comamnd.
+	$TOMCAT_HOME/bin/startup.sh
+
+5.
+Tomcat by default runs on port 8080. So application can be accessed with URL like below.
+	ex: http://IPAddress:8080/gamutkart
+		
+6.
+In case there is any issue in the application, errors will be logged in $TOMCAT_HOME/logs/catalina.2017-03-24.log file.
+	We can check this file and if there are any errors/exceptions, we provide this info to developers.
+
+
+Interview Notes:
+==================
+Maven Features:
+	1- Convention over configuration
+	2- Universal reuse of build practices.
+	3- Automatic dependency resolution feature
+	4- Maven is more than a Build tool- It's also called as "project management tool".
+		[ Using maven, we can generate a site containing project information, dependencies, test results, teams working on the project..etc. So, Maven can be also considered as a project management tool ]
+		
+	5- With a minimal/less build code, we can build 
+	  any project within a very less time.
+	
+	6- Easy searching and filtering of artifacts.
+	
+
+

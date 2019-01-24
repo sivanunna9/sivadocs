@@ -1,0 +1,18 @@
+How create a node in jenkins
+
+1. Go to manage jenkins and click on manage nodes 
+2. create click on new node option and give the node name 
+3. in terminal create a new container and setup the all jdk,maven,ssh server,git,vim,bashrc and create one more dirctory like (build) and give the file permission chmod 777 -R build 
+4. Remote root directory we have to give the build path like /home/satya/bulid
+5. Labels we have to give any name like "slave"
+6. Usage select the (only build jobs with lable expression matchning this node)
+7. Launch method select the ( Launch agent via agents SSH )
+8. Host	give the container (172.17.0.3)
+9. Credentials add (user: satya passwd : 123 )
+10. Host Key Verification Strategy we have to select  ( Non verfing verfication strategy) 
+11. Node Properties select the Environment variables we have to give the Environment variables
+12. Tool Locations we have to give the our container Environment variables ( jdk & maven )
+13. Restrict where this project can be run	
+ 	Label Expression	"slave"
+
+14. build the project it will work on our node machine and checkt console output build is stable 
