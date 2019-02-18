@@ -147,6 +147,8 @@ you can launch jenkins using below URL:
 		- start the tomcat
 
 21. How many builds you store in your jenkins.    **********
+
+ mostly we save the 10 builds
 22. How do you rotate logs for your Jenkins?  **************
 
 23. How do you backup your jenkins data?
@@ -171,7 +173,7 @@ you can launch jenkins using below URL:
 	What plugins you installed? Name few plugins which you have used?
 ====
 1. Thin Backup -
-Using Cron tab style/notion, we can schedule the backups for jenkins. We usually take backup for Jenkins home directory. Once we install this plugin, It adds "	ThinBackup" section to "manage jenkins".
+Using Cron tab style/notion, we can schedule the backups for jenkins. We usually take backup for Jenkins home directory. Once we install this plugin, It adds "ThinBackup" section to "manage jenkins".
 
 
 2. Job Configuration History plugin:

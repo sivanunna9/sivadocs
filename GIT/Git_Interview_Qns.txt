@@ -323,7 +323,21 @@ $ git diff-tree no-commit-id --name-only -r <SHA>
 		$ git reset --hard HEAD~1
 		$ git reset --soft HEAD~1
 46. How do you lock the branch
- *********************************
+  Configuring protected branches
+1.On GitHub, navigate to the main page of the repository.
+
+2.Repository settings buttonUnder your repository name, click  Settings.
+
+3.Repository options sub-menuIn the left menu, click Branches.
+
+4.Add branch protection rule buttonNext to "Branch protection rules", click Add rule.
+
+5.Branch rule field Under "Apply rule to", type the branch name or pattern you want to protect.
+
+6.Protected branch rule settingsOptionally, you can configure specific branch rule settings.
+
+7.To confirm your branch protection rule, click Create or Save changes.
+
 47. How do you clone the code from a particular paticular branch?
 $ git clone -b dev_1.2.3 --single-branch https://github.com/sivanunna9/flipkart.git
 48. How do you restore a deleted file? Or previous changes of a file?
@@ -358,7 +372,37 @@ $ git init
 
 $ git cherry pick <SHA value> ( if we have two branches like maser and dev_1.2.3 in dev branch we have 2 files like aa.java bb.java git add aa.java git add bb.java and commits the files induvidualy and git log and switched to master branch and give git cherry pick first file SHA value and second file SHA value , those files will added into master branch)
 
+55. $ git rebase dev_1.2.3
+( if we have two branches like maser and dev_1.2.3 in dev_1.2.3 branch we have 2 files like aa.java bb.java git add aa.java git add bb.java and commits the files induvidualy and git log and switched to master branch and give $ git rebase dev_1.2.3 , those files will added into master branch)
 
+56. git squash 
+
+( if we have two branches like maser and dev_1.2.3 in dev_1.2.3 branch we have 2 files like aa.java bb.java git add aa.java git add bb.java and commits the files induvidualy and git log and switched to master branch and give $ git merge --squash dev_1.2.3 and this files will be in staging area and give git commit the it will come to the master HEAD)
+ 
+57. 
+
+
+
+
+
+
+58. Apache vs. Nginx
+                                         
+Apache                                                                              
+Apache follows multi-threaded approach to process client requests.
+It handles dynamic content within the web server itself.
+It cannot process multiple requests concurrently with heavy web traffic.
+Modules are dynamically loaded or unloaded making it more flexible.
+Apache is designed to be a web server.
+A single thread can only process one connection.
+
+Nginx
+Nginx uses an event-driven approach to serve client requests.
+It cannot process dynamic content natively.
+It can process multiple client requests concurrently and efficiently with limited hardware resources.
+The modules cannot be loaded dynamically. They must be compiled within the core software itself.
+Nginx is both a web server and a proxy server.
+A single thread can handle multiple connections.
 
 
 
@@ -366,7 +410,9 @@ $ git cherry pick <SHA value> ( if we have two branches like maser and dev_1.2.3
 
 
 =========================
-1.git cherry pick 
+
+What is the difference between branch and tag?
+37. When do you create a branch and tag1.git cherry pick 
 2.git squash  
 3.git bi-sect
 4.git blob

@@ -85,7 +85,7 @@ Check the configurations using below command
 $ git config --list
 
 Git stores all configurations in below file
-"/home/gamut/.gitconfig"
+"/home/sai/.gitconfig"
 
 
 Day-3
@@ -145,6 +145,7 @@ Day-4
 Show me all logs committed by user "Ram" AND has a commit message "math function" in it.
 
 $ git log --author="Ram" --grep="math function"
+$ git log --author="sivanunna9" --gerp= "java file is added"
 
 
 Day-5
@@ -391,3 +392,7 @@ How to delete the remo repo file from terminal
 git rm <filename>
 git commit -m " <filename>"
 git push 
+
+
+
+

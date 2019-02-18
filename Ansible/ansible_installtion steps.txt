@@ -1,9 +1,0 @@
-install both in python
-in one machine install ansible & python
-in ansible-server generate the ssh-keygen
-$ cat  /home/ubuntu/.ssh/id_rsa.pub ( and this key copy to another machine location is root@#$ vim .ssh/authorized_keys and apply service sshd restart)
-$ vim /etc/ansible/hosts (ansible-server) and will give any server name and ip address like [db-server] 172.17.11.222
-$ ansible all -m ping (ansible-server) (it will ping the all servers)
-
- 
-

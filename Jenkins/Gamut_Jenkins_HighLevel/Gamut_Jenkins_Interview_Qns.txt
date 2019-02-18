@@ -77,11 +77,12 @@ Approach:3
 
 7. How do you start/stop jenkins?
 
-8. Jenkins is running some jobs and I want to restart it. How do you restart? safe restart
+8. Jenkins is running some jobs and I want to restart it. How do you restart?
    - How do you restart the jenkins without interrupting running jobs?
+safeRestart
 
-9. What is the default port number of jenkins? 
-    8080
+9. What is the default port number of jenkins?
+
 10. How do you change the port number for Jenkins?
 	Go to $TOMCAT_HOME/conf/server.xml
 	Change port number in this line: [ port="8080" protocol="HTTP/1.1" ] 

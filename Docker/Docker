@@ -9,8 +9,7 @@ VM, Docker, usage in realtime
 
 #
 what is docker? why docker? who can use it?
-
-
+docker container is run time instance of an image & developers,QA	
 #
 Supported Platforms-
 	- Docker is supported on
@@ -146,7 +145,7 @@ step3:-
 - Create an user and set up password
 $ useradd -m -d /home/gamut -s /bin/bash gamut
 $ passwd gamut
-$ adduser --home /home/bunny --shell /bin/bash bunny
+$ adduser --home /home/satya--shell /bin/bash satya
 
 step4:- 
 - Start the server
@@ -162,7 +161,7 @@ $ vim /etc/passwd
 
 
 #
-Shotdown a container
+Shutdown a container
 "exit" to stop the container
 
 # List all containers(stopped and running)
@@ -244,8 +243,15 @@ DAY-3:
 
     $ docker inspect <container-name/id> ( it will shows container details)
     $ docker inspect <container-name/id> | grep IPAdress | tail -1
-   $ docker inspect <container-name/id> | grep IPAdress | tail -1 
- 
+   $ docker inspect <container-name/id> | grep IPAdress | tail -1 | cut -d ':' -f2 | tr -d '|,|"'
+       this command shows  IPaddress of the running containers using multiple command append in one command using (|) pipe symbol
+  $ sudo docker inspect -f '{{.Name}}' `sudo docker ps -a -q`
+    this command will shows the all container names
+
+ $ sudo docker inspect -f '{{.Name}}' $(docker pa -a -q --no-trunc) | cut -c2-
+      shows the commands the all containers names without "/"
+         -c2- gives you first character of container name (ex.c) 
+
 
 
 	$ docker inspect dgamut
@@ -541,7 +547,7 @@ docker compose
 ==============
 In the words of Docker Inc.
 
-Compose is a tool for defining and running multi-container Docker applications. With Compose, you use a YAML file to configure your application’s services. Then, with a single command, you create and start all the services from your configuration.
+Compose is a tool for defining and running multi-container Docker applications. With Compose, you use a YAML file to configure your application’s services. Then, with a single command,you create and start all the services from your configuration.
 
 Docker compose Installation
 =============================
@@ -673,6 +679,17 @@ Misc:
 #
 Copying file from 'host machine' to docker container
 $ docker cp filename contaier_name:/target/path/of/container
+
+
+##docker: set hostname for container
+$ docker run -h foo.bar.baz -i -t ubuntu bash
+## how execute the commnads out side of containers 
+$ docker exec -it <container-name> <command>
+how to 
+$ docker container run -d --name jenkins -p 8080:8080 jenkins
+$ docker container exec -it jenkins bash 
+
+
 
 Extras:
 docker networking

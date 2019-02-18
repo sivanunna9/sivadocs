@@ -38,7 +38,6 @@ mvn deploy command will deploy or copies war/jar into remote repository like nex
 2.Maven is a project management tool which encompasses a project object model, a set of standards, a project lifecycle, a dependency management system, and logic for executing plugin goals at defined phases in a lifecycle
 3.Maven can then apply cross-cutting logic from a set of shared (or custom) plugins.
 
-
 6.While building the project, you get an error saying some jar file is missing. how do you add that?
  we can the dependency in the pom.xml file.
 7.What is groupId, artifactId, and Version in Maven?

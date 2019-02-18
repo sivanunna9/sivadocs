@@ -75,8 +75,8 @@ Ansible.cfg
 												become-method=sudo
 												become-user=root
 												become-ask-pass=false
-						Paramiko-connection, SSH-connection, Accelerate :: settings to optimize connections to managed hosts
-						Selinux :: SeLinux Settings
+Paramiko-connection, SSH-connection, Accelerate :: settings to optimize connections to managed hosts
+Selinux :: SeLinux Settings
 Control Nodes --
 	Managed by Admins which has copies of all projects. 
 	Control Node will run playbooks.
