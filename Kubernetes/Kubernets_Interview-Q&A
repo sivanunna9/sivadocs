@@ -1,0 +1,190 @@
+what is label in kubernetes?
+---------------------------
+Labels. Kubernetes labels by example. Labels are the mechanism you use to organize Kubernetes objects. A label is a key-value pair with certain restrictions concerning length and allowed values but without any pre-defined meaning.
+
+Kubernetes 1.14:
+----------------- 
+We’re pleased to announce the delivery of Kubernetes 1.14, our first release of 2019!
+Kubernetes 1.14 consists of 31 enhancements: 10 moving to stable, 12 in beta, and 7 net new. The main themes of this release are extensibility and supporting more workloads on Kubernetes with three major features moving to general availability, and an important security feature moving to beta.
+
+Q1) What is Kubernetes?
+Answer: Kubernetes is an extensible, portable, and an open-source platform used for managing services and containerized workloads. It is a large and fast-growing ecosystem as its services, tools, and supports that are frequently and widely available.
+
+Q2) Describe the history of Kubrnetes?
+Answer: Kubernetes word has been originated from Greek with a meaning pilot or helmsman. It was foremostly designed by Google in 2014. It has become the building block for running the workload productions at scale for Google. Later it has been maintained by Cloud Native Computing Foundation.
+
+Q3) What are the major differences between Kubernetes and Docker Swarm?
+Answer:
+
+Features	Kubernetes 	Docker Swarm
+Application definition	The application is set up using a consolidation of pods and deployments.	In this, the applications are set as micro-services.
+Logging and monitoring	Kubernetes supports multiple versions of monitoring and logging.	It is supported for only auditing of third-party applications.
+Scalability	Highly scalable	More scalable when compared to Kubernetes
+Networking	In this the networking model is flat.	The overlay of the network is created by joining a node with the cluster.
+Availability	It provides a huge amount of availability among the nodes.	It also provides large and more availability for the services  that are depicted in Swarm
+Q4) What is are the reasons why Kubernetes is more useful by walking back in time?
+Answer: Kubernetes mainly contains three important deployments. They are:
+
+Traditional Deployment
+Virtualized Deployment
+Container Deployment
+These three are the most crucial aspects that are useful by going back in time
+
+Traditional Deployment:
+
+Earlier in this era, applications can run on the physical servers by various organizations. This causes allocation issues related to resources, which can be solved by running each and every application on the different servers.
+
+Virtualized Deployment:
+
+The introduction of virtualization was done so, that it allows us to run many numbers of virtual machines on only one server CPU.
+
+Container Deployment:
+
+Container deployment has flexible isolation properties in order to share an operating system among applications.
+
+Q5) Why do we need Kubernetes and what it can do?
+Answer: Kubernetes is the container that provides a good way to run and bundle your applications. We need to effectively manage the containers in the production environment that allows us to run applications. It also provides a framework to run distributed systems resiliently.
+
+Q6) What are the features of Kubernetes?
+Answer: The features of Kubernetes are as follows:
+
+Storage orchestration
+Automated rollbacks and rollouts
+self-healing
+Configuration management
+Packing of bin automatically
+Load balancing and service discovery
+Q7) List out the components of Kubernetes?
+Answer: There are mainly three components to deliver a functioning Kubernetes cluster. They are:
+
+Addons
+Node components
+Master components
+ Q8) How does Kubernetes relate to Docker?
+Answer: Kubernetes is a container for the Docker which is more comprehensive than Docker Swarm and is designed to counterpart clusters of the nodes at a level in a well-defined manner. Whereas, Docker is the platform tool for building and running the Docker containers.
+
+Q9) Define Kube Scheduler?
+Answer: It is the important aspect of the master node which notices the newly created pods with no assigned node for it, and selects one of the nodes to run on them.
+
+Get Kubernetes Training with Real Time Live Projects
+Q10) What are the benefits of Kubernetes?
+Answer: The benefits of Kubernetes are as follows:
+
+It provides easy service organizations with pods.
+It works on any of the OS as it an open-source modular tool.
+It has a huge community among container orchestration tools.
+Q11) Define Kubernetes Namespace?
+Answer: Namespaces are used in environments where there are multiple users in a respective team or project. It is mainly designed to provide scops for the names and the assigned names must be unique within the namespace. Moreover, they provide a way to divide cluster resources within the existing namespace itself.
+
+Q12) Mention the namespaces that initially the Kubernetes starts with?
+Answer: Initially the Kubernetes starts with three namespaces, and they are:
+
+kube-public: This is created automatically and can be read by all the users and it is the most reserved for cluster usage.
+
+default: It is for the objects who do not contain namespaces.
+
+kube-system: It is for the objects which are created by the Kubernetes system.
+
+Example of the initial namespaces in Kubernetes is given below:
+
+kubectl get namespace
+
+NAME	STATUS	AGE
+default	 Active	 1d
+kube-system	 Active	 1d
+kube-public	Active	 1d
+Q13) What are Kubernetes pods?
+Answer: Pods are defined as the group of the containers that are set up on the same host. Applications within the pod also have access to shared volumes.
+
+Q14) Define Kubelets?
+Answer: It is the node agent that runs on each node. It works based on PodSpec, which JSON object in terms of a pod. The Kubelet logs take a set of PodSpecs that provides various mechanisms and ensures that the PodSpecs are running effectively.
+
+Q15) What is the command Kubectl and its syntax?
+Answer: It is defined as a CLI (command-line interface) for performing and running commands against Kubernetes clusters.
+
+The syntax for Kubectl is
+
+kubectl [command] [TYPE] [NAME] [flags]
+
+Q16) How does the Kubernetes Cluster work?
+Answer:
+
+The master is the one who is responsible for managing clusters. Kubernetes automates the scheduling and distribution of application containers across the cluster in a more effective manner. In Kubernetes, Minikubes is used to create clusters. The Kubernetes cluster consists of mainly two important sources, and they are:
+
+The master coordinates the cluster
+Nodes are the workers who run applications
+kubernets cluster
+ 
+
+Q17) What do you understand by the term Kube-proxy?
+Answer: This is a network-proxy that runs on each and every node and also reflects as defined in the Kubernetes API. This proxy can also perform stream forwarding across a set of backends. It is one of the optional add-ons that provide the DNS cluster for the cluster APIs.
+
+The syntax to configure Proxy is:
+
+kube-proxy [flags]
+
+Q18) Describe in brief the working of the master node in Kubernetes?
+Answer: Kubernetes master is mainly designed to control the nodes and the nodes mainly consist of a crucial part called containers. Now, here comes the pods these pods are made up of a group of containers based upon the requirements and configurations. Every container which we utilize is present inside a pod so, if the set-up for the pod is made then the ca deploy using CUI (Command Line Interface). Scheduling of the pods is done based on the node and relevant requirements. The connection between the node and the master components in the Kubernetes is made using the Kube-apiserver.
+
+Q19) What is the function of Kube-apiserver?
+Answer: This API server of Kubernetes is mainly used to configure and validate API objects that include replication controllers, services, pods, and many more. Kube-apiserver services the REST operations and provides the frontend to the cluster’s shared region through which interaction takes place between the components.
+
+The representation for Kube-apiserver is provided as follows:
+
+kube-apiserver [flags]
+
+Get Kubernetes 100% Practical Training
+Q20) What is the role of a Kube-scheduler?
+Answer: It is defined as a workload-specific, policy rich, and topology-aware function which majorly impacts on availability, capability, and performance. The duty of scheduler is to collect individual and collective resource requirements, data locality, hardware/software policy constraints, inter-workload interference, and many more into its account. API shows or displays the necessary workload requirements.
+
+The representation for the Kube-scheduler is:
+
+kube-scheduler [flags]
+
+Q21) Describe a few words about Kuberntes Controller Manager?
+Answer: Kube-controller-manager is a divinity that embeds the crucial core control loops shipped with the Kubernetes. In most of the robotic and automation applications, control loops are the non-terminating loops that regulate the state of the particular system. In Kubernetes, the controller itself is the control loop that watches the shared state of the cluster using the apiserver. Examples of the controllers that ships today with Kubernetes are namespaces, replications, and many more.
+
+The representation for the Kube-controller-manager is given as:
+
+kube-controller-manager [flags]
+
+Q22) What do you mean by the term etcd?
+Answer: Kubernetes uses etcd to store all its data. The reason behind it is that Kubernetes is a distributed system so as to store distributed data it uses etcd. Etcd s a distributed, most reliable key-value for storing the most critical data.
+
+Q23) Define the term Minikube in Kubernetes?
+Answer: To easily learn Kubernetes locally minikube tools is used. This runs on the single-node Kubernetes cluster inside a virtual machine.
+
+Q24) What is Kubernete’s load balancing?
+Answer: The process of load balancing lets you show or display the services. There are two types of load balancing in kubernetes, and they are:
+
+Internal load balancing
+External load balancing
+Internal load balancing:
+
+This balancing is used to balance the loads automatically and allocates the pods within the necessary configuration.
+
+External load balancing:
+
+It transfers or drags the entire traffic from the external loads to backend pods.
+
+Q25) List out the components that interact with the node interface of Kubernetes?
+Answer: The following are the components that interact with the node interface of Kubernetes, and they are:
+
+Node Controller
+Kubelet
+Kubectl
+Q26) Name the process which runs on Kubernetes Master Node?
+Answer: The process that runs on Kubernetes Master Node is called the Kube-apiserver process.
+
+Q27) What are Kubernetes Minions?
+Answer: Node in the Kubernetes is called as minions previously, it is a work machine in the Kubernetes. Each and every node in the Kuberntes contains the services to run the pods.
+
+Q28) What is heapster?
+Answer: Heapster is a metrics collection and performance management system for the Kubernetes versions. It allows us for a collection of workloads, pods, and many more.
+
+Q29) Explain Kubernetes architecture with a neat diagram?
+Answer:
+
+kubernets Architecture
+Q30) What is the future scope for Kubernetes?
+Answer: Kubernetes will become one of the most used operating system (OS) for the cloud in the future. The future of Kubernetes mostly lies in virtual machines (VM) than n containers.

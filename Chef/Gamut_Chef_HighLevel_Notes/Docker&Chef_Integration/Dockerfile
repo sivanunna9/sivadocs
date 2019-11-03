@@ -1,6 +1,6 @@
-# Below Docker instructions creates a container which can be #used as a node for Chef environment
+#Below Docker instructions creates a container which can be #used as a node for Chef environment
 FROM ubuntu:16.04
-MAINTAINER "nexamatic"
+MAINTAINER "kishore"
 RUN apt-get update
 RUN apt-get install -y openssh-server
 RUN apt-get install -y vim

@@ -101,7 +101,7 @@ Git stores each change as SHA values but SVN uses simple numbers as revisions.
 
 11.) Can you explain Git architecture?
               
-                GIT
+                GIT-HUB
    -       ---------------
 	  |   flipkart    |
 	  | --------------|--------> Source code + Meta data  
