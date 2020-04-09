@@ -1,0 +1,76 @@
+
+Kubernets installation refernce link
+-------------------------------------
+
+https://www.linuxtechi.com/install-kubernetes-1-7-centos7-rhel7/
+
+
+hostnamectl set-hostname 'worker-node1'
+
+
+
+
+cat <<EOF > /etc/yum.repos.d/kubernetes.repo
+[kubernetes]
+ name=Kubernetes
+ baseurl=https://packages.cloud.google.com/yum/repos/kubernetes-el7-x86_64
+ enabled=1
+ gpgcheck=1
+ repo_gpgcheck=1
+ gpgkey=https://packages.cloud.google.com/yum/doc/yum-key.gpg
+         https://packages.cloud.google.com/yum/doc/rpm-package-key.gpg
+ EOF
+
+
+kubeadm join 192.168.0.195:6443 --token i5ye5p.k65rqywej3av4931 \
+    --discovery-token-ca-cert-hash sha256:9c8c34cf1861094bc8bd12eab40d8db682d4044300e3fc5e59bdd68b420c4814 
+
+
+deployment
+----------
+kubectl create deployment nginx --image=nginx
+kubectl get deployments
+kubectl describe deployment nginx
+
+service
+----------
+kubectl create service nodeport nginx --tcp=80:80
+kubectl get svc
+
+
+dashboard referance link
+------------------------
+https://www.edureka.co/blog/kubernetes-dashboard/
+
+how to remove kubernets dashboard
+---------------------------------
+
+kubectl get secret,sa,role,rolebinding,services,deployments --namespace=kube-system | grep dashboard
+
+kubectl delete deployment kubernetes-dashboard --namespace=kube-system 
+kubectl delete service kubernetes-dashboard  --namespace=kube-system 
+kubectl delete role kubernetes-dashboard-minimal --namespace=kube-system 
+kubectl delete rolebinding kubernetes-dashboard-minimal --namespace=kube-system
+kubectl delete sa kubernetes-dashboard --namespace=kube-system 
+kubectl delete secret kubernetes-dashboard-certs --namespace=kube-system
+kubectl delete secret kubernetes-dashboard-key-holder --namespace=kube-system
+
+
+issues
+======
+
+systemctl stop kubelet
+systemctl stop docker
+iptables --flush
+iptables -tnat --flush
+systemctl start kubelet
+systemctl start docker
+
+The route problem can be solved by flush iptables.
+
+
+
+
+
+
+
