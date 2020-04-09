@@ -1,0 +1,97 @@
+Nginx Tomcat Configugation
+===========================
+ 
+In centos
+---------
+1. Open the /etc/nginx/conf.d  path
+2. And create the file like jenkins.conf
+3.Open the /etc/nginx/nginx.conf file
+4.And here copy the the below configuration remove the default configuration
+
+
+user  nginx;
+worker_processes  1;
+
+error_log  /var/log/nginx/error.log warn;
+pid        /var/run/nginx.pid;
+
+
+events {
+    worker_connections  1024;
+}
+
+
+http {
+    include       /etc/nginx/mime.types;
+    default_type  application/octet-stream;
+
+    log_format  main  '$remote_addr - $remote_user [$time_local] "$request" '
+                      '$status $body_bytes_sent "$http_referer" '
+                      '"$http_user_agent" "$http_x_forwarded_for"';
+
+    access_log  /var/log/nginx/access.log  main;
+
+    sendfile        on;
+    #tcp_nopush     on;
+
+    keepalive_timeout  65;
+
+    #gzip  on;
+
+    include /etc/nginx/conf.d/*.conf;
+    include /etc/nginx/conf.d/apps/*/*.conf;
+} 
+
+5. In the path  /etc/nginx/conf.d/jenkins.conf copy the below configuration
+
+
+server {
+  listen 80;
+  server_name sk1jenkins;
+  return 301 https://$host$request_uri;
+}
+
+server {
+  listen 443 ssl;
+  server_name sk1jenkins;
+  ssl_certificate /etc/ssl/certs/localhost.crt;
+  ssl_certificate_key /etc/ssl/private/localhost.key;
+
+
+  location / {
+    proxy_set_header        Host $host:$server_port;
+    proxy_set_header        X-Real-IP $remote_addr;
+    proxy_set_header        X-Forwarded-For $proxy_add_x_forwarded_for;
+    proxy_set_header        X-Forwarded-Proto $scheme;
+    proxy_redirect http:// https://;
+    proxy_pass              http://127.0.0.1:8080;
+    # Required for new HTTP-based CLI
+    proxy_http_version 1.1;
+    proxy_request_buffering off;
+    proxy_buffering off; # Required for HTTP-based CLI to work over SSL
+    # workaround for https://issues.jenkins-ci.org/browse/JENKINS-45651
+    add_header 'X-SSH-Endpoint' 'sk1jenkins' always;
+  }
+}
+
+How to Create a Self-Signed SSL/TLS Certificate for Nginx
+==========================================================
+Reference link
+----------------
+https://www.humankode.com/ssl/create-a-selfsigned-certificate-for-nginx-in-5-minutes
+
+Jenkins behind an NGinX reverse proxy
+======================================
+Reference link
+---------------
+https://wiki.jenkins.io/display/JENKINS/Jenkins+behind+an+NGinX+reverse+proxy
+
+
+wsgi nginx error: permission denied while connecting to upstream
+=================================================================
+Reference link
+---------------
+https://www.digitalocean.com/community/questions/wsgi-nginx-error-permission-denied-while-connecting-to-upstream
+
+
+
