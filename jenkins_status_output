@@ -1,0 +1,149 @@
+[siva@worker-node1 init.d]$ sudo bash -x jenkins status
++ JENKINS_WAR=/usr/lib/jenkins/jenkins.war
++ test -r /usr/lib/jenkins/jenkins.war
++ JENKINS_CONFIG=/etc/sysconfig/jenkins
++ test -e /etc/sysconfig/jenkins
++ test -r /etc/sysconfig/jenkins
++ JENKINS_PID_FILE=/var/run/jenkins.pid
++ JENKINS_LOCKFILE=/var/lock/subsys/jenkins
++ . /etc/init.d/functions
+++ TEXTDOMAIN=initscripts
+++ umask 022
+++ PATH=/sbin:/usr/sbin:/bin:/usr/bin
+++ export PATH
+++ '[' 13810 -ne 1 -a -z '' ']'
+++ '[' -d /run/systemd/system ']'
+++ case "$0" in
+++ '[' -z '' ']'
+++ COLUMNS=80
+++ '[' -z '' ']'
+++ '[' -c /dev/stderr -a -r /dev/stderr ']'
++++ /sbin/consoletype
+++ CONSOLETYPE=pty
+++ '[' -z '' ']'
+++ '[' -z '' ']'
+++ '[' -f /etc/sysconfig/i18n -o -f /etc/locale.conf ']'
+++ . /etc/profile.d/lang.sh
+++ unset LANGSH_SOURCED
+++ '[' -z '' ']'
+++ '[' -f /etc/sysconfig/init ']'
+++ . /etc/sysconfig/init
++++ BOOTUP=color
++++ RES_COL=60
++++ MOVE_TO_COL='echo -en \033[60G'
++++ SETCOLOR_SUCCESS='echo -en \033[0;32m'
++++ SETCOLOR_FAILURE='echo -en \033[0;31m'
++++ SETCOLOR_WARNING='echo -en \033[0;33m'
++++ SETCOLOR_NORMAL='echo -en \033[0;39m'
+++ '[' pty = serial ']'
+++ __sed_discard_ignored_files='/\(~\|\.bak\|\.old\|\.orig\|\.rpmnew\|\.rpmorig\|\.rpmsave\)$/d'
+++ '[' '' = 1 ']'
++++ cat /proc/cmdline
+++ strstr 'BOOT_IMAGE=/vmlinuz-3.10.0-1062.18.1.el7.x86_64 root=/dev/mapper/centos-root ro crashkernel=auto rd.lvm.lv=centos/root rd.lvm.lv=centos/swap rhgb quiet LANG=en_US.UTF-8' rc.debug
+++ '[' 'BOOT_IMAGE=/vmlinuz-3.10.0-1062.18.1.el7.x86_64 root=/dev/mapper/centos-root ro crashkernel=auto rd.lvm.lv=centos/root rd.lvm.lv=centos/swap rhgb quiet LANG=en_US.UTF-8' = 'BOOT_IMAGE=/vmlinuz-3.10.0-1062.18.1.el7.x86_64 root=/dev/mapper/centos-root ro crashkernel=auto rd.lvm.lv=centos/root rd.lvm.lv=centos/swap rhgb quiet LANG=en_US.UTF-8' ']'
+++ return 1
+++ return 0
++ '[' -f /etc/sysconfig/jenkins ']'
++ . /etc/sysconfig/jenkins
+++ JENKINS_HOME=/var/lib/jenkins
+++ JENKINS_JAVA_CMD=
+++ JENKINS_USER=jenkins
+++ JENKINS_JAVA_OPTIONS=-Djava.awt.headless=true
+++ JENKINS_PORT=8080
+++ JENKINS_LISTEN_ADDRESS=
+++ JENKINS_HTTPS_PORT=
+++ JENKINS_HTTPS_KEYSTORE=
+++ JENKINS_HTTPS_KEYSTORE_PASSWORD=
+++ JENKINS_HTTPS_LISTEN_ADDRESS=
+++ JENKINS_HTTP2_PORT=
+++ JENKINS_HTTP2_LISTEN_ADDRESS=
+++ JENKINS_DEBUG_LEVEL=5
+++ JENKINS_ENABLE_ACCESS_LOG=no
+++ JENKINS_HANDLER_MAX=100
+++ JENKINS_HANDLER_IDLE=20
+++ JENKINS_EXTRA_LIB_FOLDER=
+++ JENKINS_ARGS=
++ '[' -n /var/lib/jenkins ']'
++ '[' -d /var/lib/jenkins ']'
++ candidates='
+/etc/alternatives/java
+/usr/lib/jvm/java-1.8.0/bin/java
+/usr/lib/jvm/jre-1.8.0/bin/java
+/usr/lib/jvm/java-1.7.0/bin/java
+/usr/lib/jvm/jre-1.7.0/bin/java
+/usr/lib/jvm/java-11.0/bin/java
+/usr/lib/jvm/jre-11.0/bin/java
+/usr/lib/jvm/java-11-openjdk-amd64
+/usr/bin/java
+'
++ for candidate in '$candidates'
++ '[' -x '' ']'
++ JENKINS_JAVA_CMD=/etc/alternatives/java
++ for candidate in '$candidates'
++ '[' -x /etc/alternatives/java ']'
++ break
++ JAVA_CMD='/etc/alternatives/java -Djava.awt.headless=true -DJENKINS_HOME=/var/lib/jenkins -jar /usr/lib/jenkins/jenkins.war'
++ PARAMS='--logfile=/var/log/jenkins/jenkins.log --webroot=/var/cache/jenkins/war --daemon'
++ '[' -n 8080 ']'
++ PARAMS='--logfile=/var/log/jenkins/jenkins.log --webroot=/var/cache/jenkins/war --daemon --httpPort=8080'
++ '[' -n '' ']'
++ '[' -n '' ']'
++ '[' -n '' ']'
++ '[' -n '' ']'
++ '[' -n '' ']'
++ '[' -n '' ']'
++ '[' -n '' ']'
++ '[' -n 5 ']'
++ PARAMS='--logfile=/var/log/jenkins/jenkins.log --webroot=/var/cache/jenkins/war --daemon --httpPort=8080 --debug=5'
++ '[' -n '' ']'
++ '[' -n 100 ']'
++ PARAMS='--logfile=/var/log/jenkins/jenkins.log --webroot=/var/cache/jenkins/war --daemon --httpPort=8080 --debug=5 --handlerCountMax=100'
++ '[' -n 20 ']'
++ PARAMS='--logfile=/var/log/jenkins/jenkins.log --webroot=/var/cache/jenkins/war --daemon --httpPort=8080 --debug=5 --handlerCountMax=100 --handlerCountMaxIdle=20'
++ '[' -n '' ']'
++ '[' -n '' ']'
++ '[' no = yes ']'
++ RETVAL=0
++ case "$1" in
++ status jenkins
++ local base pid lock_file= pid_file= binary=
++ '[' 1 = 0 ']'
++ '[' jenkins = -p ']'
++ '[' jenkins = -l ']'
++ '[' jenkins = -b ']'
++ base=jenkins
++ '[' '' = 1 ']'
++ __pids_var_run jenkins '' ''
++ local base=jenkins
++ local pid_file=/var/run/jenkins.pid
+++ /usr/bin/dirname /var/run/jenkins.pid
++ local pid_dir=
++ local binary=
++ '[' -d '' -a '!' -r '' ']'
++ pid=
++ '[' -f /var/run/jenkins.pid ']'
++ local line p
++ '[' '!' -r /var/run/jenkins.pid ']'
++ :
++ read line
++ '[' -z 2506 ']'
++ for p in '$line'
++ '[' -z '' ']'
++ '[' -d /proc/2506 ']'
++ '[' -n '' ']'
++ pid=' 2506'
++ :
++ read line
++ '[' -z '' ']'
++ break
++ '[' -n ' 2506' ']'
++ return 0
++ RC=0
++ '[' -z '' -a -z ' 2506' ']'
++ '[' -n ' 2506' ']'
++ echo 'jenkins (pid  2506) is running...'
+jenkins (pid  2506) is running...
++ return 0
++ RETVAL=0
++ exit 0
+

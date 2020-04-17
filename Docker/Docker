@@ -242,8 +242,8 @@ DAY-3:
 	 Examples:
 
     $ docker inspect <container-name/id> ( it will shows container details)
-    $ docker inspect <container-name/id> | grep IPAdress | tail -1
-   $ docker inspect <container-name/id> | grep IPAdress | tail -1 | cut -d ':' -f2 | tr -d '|,|"'
+    $ docker inspect <container-name/id> | grep IPAddress | tail -1
+   $ docker inspect <container-name/id> | grep IPAddress | tail -1 | cut -d ':' -f2 | tr -d '|,|"'
        this command shows  IPaddress of the running containers using multiple command append in one command using (|) pipe symbol
   $ sudo docker inspect -f '{{.Name}}' `sudo docker ps -a -q`
     this command will shows the all container names

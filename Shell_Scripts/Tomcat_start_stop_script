@@ -1,0 +1,153 @@
+Tomcat start and stop and restart shell script
+===============================================
+1.create the tomcat user 
+2. Install the java
+3. Install the tomcat 
+4. Set the environmentvariables
+   export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
+   export CATALINA_HOME=/home/tomcat/server8080
+   export PATH=$JAVA_HOME/bin:$CATALINA_HOME/bin:$PATH
+
+
+5. Open the the below path
+  $ cd /home/tomcat/apache-tomcat-8.5.54
+
+6. Create the tomcat directory the below location
+  $ cd /var/run/tomcat
+7.Rename the apche-tomcat
+  $ mv apache-tomcat-8.5.54 server8080
+  $ cd /home/tomcat/server8080/conf/
+8. Take backup the server.xml 
+  cp server.xml server.xml.orig 
+9.Now we just need to go down a list of 3 things that must be changed
+
+  shutdown port (default 8005)
+  http port (default 8080)
+  ajp port (default 8009)
+
+change: 
+   <Server port="8005" shutdown="SHUTDOWN">
+to:
+   <Server port="${shutdown.port}" shutdown="SHUTDOWN">
+
+
+
+
+change :
+   <Connector port="8080" protocol="HTTP/1.1" 
+           connectionTimeout="20000" 
+           redirectPort="8443" />
+to: 
+   <Connector port="${http.port}" protocol="HTTP/1.1" 
+           connectionTimeout="20000" 
+           redirectPort="8443" />
+
+
+Change:
+   <Connector port="8009" protocol="AJP/1.3" redirectPort="8443" />
+
+
+to: 
+   <!-- <Connector port="8009" protocol="AJP/1.3" redirectPort="8443" /> -->
+
+
+
+10. Now we can create the tomcat8080.sh file in below path and copy the below script
+   $ vi /home/tomcat/server8080/bin/tomcat8080.sh 
+
+#!/bin/sh
+###################
+# Port settings
+###################
+PORT=8080
+SHUTDOWN_PORT=7000
+
+###################
+# Memory Settings
+###################
+MAXMEMORY="1024m"
+PERMGEN="256m"
+
+# configure this to point to your Java installation directory
+JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
+
+CATALINA_PID=/var/run/tomcat/${PORT}.pid
+
+CATALINA_OPTS="-server -Xms60m -Xmx${MAXMEMORY} -XX:MaxPermSize=${PERMGEN}"
+
+JAVA_OPTS="-Dhttp.port=${PORT} -Dshutdown.port=${SHUTDOWN_PORT}"
+CATALINA_HOME=/home/tomcat/server${PORT}
+CATALINA_BASE=/home/tomcat/server${PORT}
+
+cd ${CATALINA_HOME}
+
+. ${CATALINA_HOME}/bin/catalina.sh
+
+11. Now we can execute the file 
+   $ chmod +x tomcat8080.sh
+   $ ./tomcat8080.sh start
+
+12.To stop the server:
+   
+   $ ./tomcat8080.sh stop
+         (or)
+   $ ./tomcat8080.sh stop -force
+
+13.Now we can create the file in the below path and copy the below script
+
+  $ vim /etc/init.d/tomcatserver.sh
+
+    
+#!/bin/sh
+  
+SCRIPT=/home/tomcat/server8080/bin/tomcat8080.sh
+
+start() {
+   echo running: $SCRIPT start
+   su - root -c  "$SCRIPT start"
+}
+
+stop() {
+    echo running: $SCRIPT stop -force
+    su - root -c  "$SCRIPT stop -force"
+}
+
+case "$1" in
+  start)
+        start
+        ;;
+  stop)
+        stop
+        ;;
+  restart)
+        stop
+        sleep 3
+        start
+        ;;
+  *)
+  echo "Usage: $0 (start|stop|restart)" 
+  exit 1
+esac
+
+
+
+14. Then start & stop the script
+   $ tomcatserver.sh start
+   $ tomcatserver.sh stop -force
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
