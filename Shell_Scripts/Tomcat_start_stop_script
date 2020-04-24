@@ -135,6 +135,11 @@ esac
    $ tomcatserver.sh start
    $ tomcatserver.sh stop -force
 
+15. Reference link is 
+
+
+ https://seiscode.iris.washington.edu/projects/webserviceshell/wiki/Tomcat_setup
+
 
 
 

@@ -1,0 +1,65 @@
+Configure knife zero bootstrap
+===============================
+1. first we will install knife-zero
+ $ chef gem install knife-zero
+
+2.Then install ruby-bundler
+ $ sudo apt-get install ruby-bundler
+ $ bundle install --binstubs --path vendor/bundle 
+
+
+
+
+3. First we will create a directory like <my_chef_repo>
+ $ mkdir my_chef_repo 
+ $ cd my_chef_repo
+
+4.Then we will create a file like <knife.rb>
+  $vim knife.rb
+  
+local_mode true
+chef_repo_path   File.expand_path('../' , __FILE__)
+
+knife[:ssh_user] = "ubuntu"
+knife[:ssh_attribute] = "knife_zero.host"
+knife[:use_sudo] = true
+
+## use specific key file to connect server instead of ssh_agent(use ssh_agent is set true by default).
+#knife[:identity_file] = File.expand_path('../' , __FILE__) + 'aws-new-key.pem'
+puts "this is file #{knife[:identity_file]}"
+## Attributes of node objects will be saved to json file.
+## the automatic_attribute_whitelist option limits the attributes to be saved.
+knife[:automatic_attribute_whitelist] = %w[
+  fqdn
+  os
+  os_version
+  hostname
+  ipaddress
+  roles
+  recipes
+  ipaddress
+  platform
+  platform_version
+  cloud
+  cloud_v2
+  chef_packages
+]
+
+
+5.Then we will create a directory like <cookbooks>
+ $ cd my_chef_repo 
+ $ mkdir cookbooks 
+ $ cd cookbooks 
+6.Write the cookbooks in the cookbook directory example nginx cookbook
+
+7.And copy the aws.pem key this directory < my_chef_repo >
+ 
+
+8. Then bootstrap 
+ $ knife zero bootstrap 18.223.44.220 -y -i aws-new-key.pem --ssh-user ubuntu
+
+  example :(--ssh-user: This flag is deprecated. Use -U/--connection-user instea d.)
+
+9.Thebootstarp 
+ $ knife zero bootstrap 18.223.44.220 -y -i aws-new-key.pem --ssh-user ubuntu --run-list "recipe[nginx::default]"
+ 
