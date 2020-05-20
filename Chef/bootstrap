@@ -1,0 +1,10 @@
+knife bootstrap 35.154.85.120 -x ec2-user --sudo --identity-file /home/siva/Download/test.pem -P ‘ubuntu’ -N ubuntu
+
+  through node name
+---------------------
+$ knife bootstrap 18.188.199.21 -x ubuntu --sudo --identity-file /home/siva/Download/aws.pem -P ‘ubuntu’ -N ubuntu
+
+   through node id
+---------------------
+$ knife bootstrap 35.154.85.120 -x ubuntu --sudo --identity-file /home/siva/Documents/chef/nginx4/.chef/test.pem -P ‘ubuntu’ -N i-015e3ef4e5f9442
+© 2020 GitHub, Inc.

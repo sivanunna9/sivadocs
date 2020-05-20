@@ -1,0 +1,5 @@
+ docker run -d --name devtest --mount source=/home/siva/web1,target=/home/satya/apache-tomcat-8.5.54/webapps kiran787/tom8:latest
+
+ docker run -itd --name siva123 --volume my-vol:/home/satya/apache-tomcat-8.5.54/webapps kiran787/tom8:latest
+ 
+ docker run -itd --name siva1 --volume my-vol2:/home/satya/apache-tomcat-8.5.54/webapps --volume my-vol2:/home/satya/apache-tomcat-8.5.54/logs kiran787/tom8:latest
