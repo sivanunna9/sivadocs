@@ -29,3 +29,13 @@ server {
 }
 
 
+
+after refresh page showing 404 error how to fix it in nginx
+-------------------------------------------------------------
+
+
+reference link 
+---------------
+https://www.digitalocean.com/community/questions/nginx-404-error-with-existing-urls-angular-2-one-page-application-with-routing
+
+https://stackoverflow.com/questions/51987032/nginx-404-error-when-existing-urls-with-angular-2-routing-are-refreshed
