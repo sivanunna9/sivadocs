@@ -1,0 +1,26 @@
+server {
+       listen    80 ;
+      # listen    [::]:80 default server;
+       server_name localhost;
+    #return 301 https://$host$request_uri;
+
+       location / {
+                root  /home/ubuntu/User-Management-System-using-ReactJS-NodeJS-and-MYSQL/frontend/build;
+                index  index.html;
+                try_files $uri /index.html;
+                expires 30d;
+                }
+
+       location /api {
+                 proxy_set_header X-Real-IP $remote_addr;
+                 proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+                 proxy_set_header X-NginX-Proxy true;
+                 proxy_pass http://18.218.236.67:5001/;
+                 proxy_ssl_session_reuse off;
+                 proxy_set_header Host $http_host;
+                 proxy_cache_bypass $http_upgrade;
+                 proxy_redirect off;
+            }
+
+}
+
