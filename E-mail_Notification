@@ -1,0 +1,38 @@
+Email Notification
+===================
+
+1.Open the Manage Jenkins
+2.Under manage jenkins choose the Configure System
+3.In congigure system choose E-mail Notification  
+		
+E-mail Notification select 
+
+SMTP server:- smtp.gmail.com
+
+Use SMTP Authentication
+
+User Name :- sivabghj@gmail.com
+
+Password :- xxxxxxxxx
+
+Use SSL
+
+SMTP Port :- 465 or 587 or 25
+
+		
+Test configuration by sending test e-mail
+
+Test e-mail recipient :- sivabghj@gmail.com
+
+Test configuration
+
+Next open the jenkins job configuration 
+
+select the Post-build Actions
+
+choose the Email Notification
+
+sivabghj@gmail.com
+
+
+

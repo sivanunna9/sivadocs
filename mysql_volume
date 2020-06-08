@@ -1,0 +1,9 @@
+
+
+
+docker run --name some-mysql -v /home/siva/datadir:/var/lib/mysql -e MYSQL_ROOT_PASSWORD=my-secret-pw -d mysql
+
+
+docker run --name somesql -v /home/siva/mysql_backup:/var/lib/mysql -e MYSQL_ROOT_PASSWORD=my-secret-pw -d mysql
+
+docker run -it --name sivatom -v /home/siva/tomcatbackup:/usr/local/tomcat -p 8887:8080 tomcat:8.0 /bin/bash

@@ -1,0 +1,41 @@
+chef-client --local-mode hello.rb -> to run the recipe locally
+chef-solo -j run.json
+
+chef generate cookbook <cookbook name> -> to create a cookbook with specified name
+chef generate template <template name with path> ->to create template with specified name
+knife cookbook show <apache>  -> to see cookbook version
+
+knife ssl check -> to check the connection between chef workstation and chef server
+knife cookbook upload <c.b name> ->to upload cookbook
+knife cookbook list 
+knife cookbook delete <name of c.b> 0.1.0
+
+knife bootstrap 172.17.0.2 --ssh-user sai --ssh-password 'sai' --sudo --use-sudo-password --node-name chfserver	
+
+knife node list
+knife node show <node name> 
+knife node run_list add <node mame> "recipe[apache]"
+knife node run_list set <node mame> "recipe[apache]"
+knife node run_list remove <node mame> "recipe[apache]"
+
+knife role from file <webserver.json>  ->to upload the webserver role 
+knife node run_list add <node mame> "role[webserver]"  -> to add the webserver role to the node
+
+knife environment list -> to check the environments list
+knife environment from file <dev.rb> 
+
+knife environment compare dev
+knife environment compare dev prod
+knife environment compare --all
+
+knife environment delete <name of env>
+
+
+
+some more knife commands 
+knife search node "platform:ubuntu"
+knife ssh "role:webserver" "uptime" -x root
+knife ssh "role:webserver" "chef-client" -x root
+
+https://www.linode.com/docs/applications/configuration-management/creating-your-first-chef-cookbook/
+
