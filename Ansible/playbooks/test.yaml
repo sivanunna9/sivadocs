@@ -1,0 +1,66 @@
+---
+- hosts: host
+  remote_user: root
+  become: true
+  tasks:
+
+     - name: create directory with a date in name
+       file:
+         path: /home/distros
+         state: directory
+
+         # - name: Install Maven
+         # apt: name={{items}} state=present update_cache=yes
+         #with_items:
+         #- maven
+
+     - name: Only run "update_cache=yes" if the last one is more than 3600 seconds ago
+       apt:
+         update_cache: yes
+         #   cache_valid_time: 3600    
+
+     - name: Install the package "maven"
+       apt:
+         name: maven
+
+     
+     - name: Install java8
+       apt:
+         name: openjdk-8-jdk
+      
+         #     - name: Ansible register variable basic example
+         # shell: "find apache-tomcat-8.5.55.tar.gz"
+         # args:
+         #  chdir: "/home/distros"
+         # register: find_output
+
+         # - debug:
+         # var: find_output
+
+     - name: Download Tomcat
+       get_url:
+         url: https://downloads.apache.org/tomcat/tomcat-8/v8.5.55/bin/apache-tomcat-8.5.55.tar.gz
+         dest: /home/distros
+         mode: 700
+         
+     - name: Extract the Tomcat
+       unarchive:
+         src: /home/distros/apache-tomcat-8.5.55.tar.gz
+         dest: /home/distros/tomcat
+         remote_src: yes
+
+     - name: Copy file with owner and permissions
+       copy:
+         src: /etc/ansible/files/tendermanagement-0.0.1-SNAPSHOT.war 
+         dest: /home/distros/tomcat/apache-tomcat-8.5.55/webapps
+
+
+         # - name: Start the tomcat
+       #      shell: sh /home/distros/tomcat/apache-tomcat-8.5.55/bin/startup.sh
+       #remote_src: yes
+     
+         # - name: Start the tomcat 
+         # shell: ./startup.sh
+         # args:
+         # chdir: /home/distros/tomcat/apache-tomcat-8.5.55/bin
+

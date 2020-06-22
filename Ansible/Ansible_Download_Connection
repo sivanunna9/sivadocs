@@ -1,0 +1,58 @@
+Download the Ansible in AWS EC2 Instances_Ubuntu
+--------------------------------------------------
+1. Update 
+$ sudo apt-get update
+
+2.Add the ansible repository using bellow command 
+
+$  sudo apt-add-repository ppa:ansible/ansible
+
+3. Update
+
+$ sudo apt update
+ 
+4. Install the ansible
+
+$ sudo apt install ansible
+
+5.In hosts file add the node machine IP assress like bellow formate
+
+$ sudo vi /etc/ansible/hosts
+   
+[aws]
+172.31.16.35
+  
+6.In ansible.cfg file uncomment the inventory
+ 
+$ sudo vi /etc/ansible/ansible.cfg 
+
+inventory      = /etc/ansible/hosts
+
+7.Then generate he ssh-keygen in master machine using bellow command
+
+$ ssh-keygen
+
+8.Copy the id_rsa.pub to the node machine
+$ ssh-copy-id ubuntu@172.31.36.230
+$ ssh-copy-id -f ubuntu@172.31.36.230
+         (or)
+ Copy the manually
+
+9.In node machine sudoers file add the ubuntu user like bellow 
+
+ ubuntu	ALL=NOPASSWD: ALL
+
+10.Check the connection through ssh bellow command
+ 
+$ ssh ubuntu@172.31.36.230
+
+$ ansible -m ping all 
+
+
+
+
+
+
+
+
+
