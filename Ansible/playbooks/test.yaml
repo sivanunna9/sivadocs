@@ -4,10 +4,22 @@
   become: true
   tasks:
 
-     - name: create directory with a date in name
+     - name: Check that the somefile.conf exists
+       stat:
+         path: /home/distros
+       register: stat_result
+
+     - name: Create the file, if it doesnt exist already
        file:
          path: /home/distros
          state: directory
+       when: not stat_result.stat.exists
+
+
+       #    - name: create directory with a date in name
+       # file:
+       #  path: /home/distros
+       #  state: directory
 
          # - name: Install Maven
          # apt: name={{items}} state=present update_cache=yes
@@ -37,16 +49,27 @@
          # - debug:
          # var: find_output
 
-     - name: Download Tomcat
+     - name: Check that the somefile.conf exists
+       stat:
+         path: /home/distros/apache-tomcat-8.5.55.tar.gz
+       register: stat_result1
+
+     - name: download file with custom HTTP headers
        get_url:
          url: https://downloads.apache.org/tomcat/tomcat-8/v8.5.55/bin/apache-tomcat-8.5.55.tar.gz
          dest: /home/distros
-         mode: 700
+       when: not stat_result1.stat.exists
+
+       #   - name: Download Tomcat
+       #   get_url:
+       #  url: https://downloads.apache.org/tomcat/tomcat-8/v8.5.55/bin/apache-tomcat-8.5.55.tar.gz
+       #  dest: /home/distros
+       #  mode: 700
          
      - name: Extract the Tomcat
        unarchive:
          src: /home/distros/apache-tomcat-8.5.55.tar.gz
-         dest: /home/distros/tomcat
+         dest: /home/distros
          remote_src: yes
 
      - name: Copy file with owner and permissions
