@@ -1,0 +1,63 @@
+RDS MSQL Configuration in AWS
+------------------------------
+
+1. Login to aws console then in services serch the RDS and select the RDS
+
+2. Choose the database and select the easy create in configuration and choose MYSQL and DB instance size select Fee tire
+
+3. DB Instance identifier > (database-1)
+
+4. Master username > (admin)
+
+5. Master password > (*****)
+
+6. Conform password > (*****)
+
+7. View default setting for Easy create 
+
+8. Then Create the database
+
+9. After creating the database and select security choose VPC security groups and add inbound rules 
+   
+   like this:- (All traffic)  add your VPC range for ( example :- 10.0.0.0/16 )
+
+10. Now lanch EC2 instance and security groups allow the All traffic VPC range (10.0.0./16)
+
+11. Then install the mysql-client in EC2 instance 
+
+   $ sudo apt-get install mysql-client-core-5.7
+
+12. Connect to database using belo command
+  
+   $ mysql -h < Copy the Endpoint from RDS > -uadmin -p
+
+13. Then creating databases and tables 
+
+14. Exit to mysql 
+
+15. Install all the dependences like maven,java,tomcat,git
+
+16. Clone the application
+
+17. Open the application.propertes
+   $  vim src/main/resource/application.propertes
+
+18. Change the Database tetails like 
+    
+    driverName = com.mysql.jdbc.Driver
+    connectionString = jdbc:mysql://< Copy the Endpoint from RDS >:3306/tender
+    username = admin
+    password = ****
+
+19. Now build the application 
+   
+   $ mvn install
+
+20. Copy the .war file to the Tomcat webapps foldar and run the application
+
+
+
+reference link:- https://stackoverflow.com/questions/30217299/how-to-export-database-from-amazon-rds-mysql-instance-to-local-instance
+---------------     
+
+  

@@ -1,0 +1,27 @@
+RDS MYSQL
+---------
+
+sudo update-alternatives --config java
+
+
+sudo apt install mysql-client-5.7  
+
+How to connect the mysql server
+--------------------------------
+$  mysql -h database-1.cahjcglfvn7r.us-east-2.rds.amazonaws.com -u admin -p
+
+
+Take the dump from the remote RDS Server:
+------------------
+
+$ mysqldump -h sql.service -uadmin -psivakiran tender  --set-gtid-purged=OFF > dumpfilename.sql
+
+
+Upload it to your local mySql instance:
+----------------------------------------
+$  mysql -h sql.service -uadmin -psivakiran < dumpfilename.sql
+
+
+reference link:- https://stackoverflow.com/questions/30217299/how-to-export-database-from-amazon-rds-mysql-instance-to-local-instance
+
+
