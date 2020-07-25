@@ -1,0 +1,115 @@
+Kubernetes install Documantation Ubuntu 18.04
+==============================================
+
+Reference link:-https://www.linuxtechi.com/install-configure-kubernetes-ubuntu-18-04-ubuntu-18-10/
+--------------
+
+1.Login to the master node and configure its hostname using the hostnamectl command
+
+   $ sudo hostnamectl set-hostname "k8s-master"
+   $ exec bash
+
+2.Login to Slave / Worker Nodes and configure their hostname respectively using the hostnamectl command,
+
+   $ sudo hostnamectl set-hostname k8s-worker-node1
+   $ exec bash
+
+3.Add the following lines in /etc/hosts file on all two systems,
+
+   192.168.1.70     k8s-master
+   192.168.1.80     k8s-worker-node1
+   192.168.1.90     k8s-worker-node2
+
+
+4.Install and Start Docker Service on Master and Slave Nodes
+
+5.Run the below apt-get command to install Docker on Master node,
+
+   $  sudo apt-get install docker.io -y
+
+6.Run the below apt-get command to install docker on slave nodes, 
+  
+   $ sudo apt-get install docker.io -y
+
+7.Once the Docker packages are installed on all the three systems , start and enable the docker service using below systemctl commands, these commands needs to be executed on master and slave nodes.
+
+   $ sudo systemctl start docker
+   $ sudo systemctl enable docker
+
+8. Use below docker command to verify which Docker version has been installed on these systems,
+
+   $ docker --version
+
+9.  Configure Kubernetes Package Repository on Master & Slave Nodes
+10. Note: All the commands in this step are mandate to run on master and slave nodes
+11. Let’s first install some required packages, run the following commands on all the nodes including master node
+
+  $ sudo apt-get install apt-transport-https curl -y
+
+12.Now add Kubernetes package repository key using the following command,
+
+  $ curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add
+
+13. Now configure Kubernetes repository using below apt commands, at this point of time Ubuntu 18.04 (bionic weaver) Kubernetes package repository is not available, so we will be using Xenial Kubernetes package repository.
+
+  $ sudo apt-add-repository "deb http://apt.kubernetes.io/ kubernetes-xenial main"
+
+14. Disable Swap and Install Kubeadm on all the nodes
+
+15. Note: All the commands in this step are mandate to run on master and slave nodes
+
+16. Kubeadm is one of the most common method used to deploy kubernetes cluster or in other words we can say it used to deploy multiple nodes on a kubernetes cluster.
+
+17.As per the Kubernetes Official web site, it is recommended to disable swap on all the nodes including master node.
+
+19. Run the following command to disable swap temporary,
+
+   $ sudo swapoff -a
+
+20. For permanent swap disable, comment out swapfile or swap partition entry in the /etc/fstab file.
+
+21. Now Install Kubeadm package on all the nodes including master.
+
+   $ sudo apt-get install kubeadm -y
+
+22. Once kubeadm packages are installed successfully, verify the kubeadm version using beneath command.
+
+   $ kubeadm version
+
+23. Initialize and Start Kubernetes Cluster on Master Node using Kubeadm
+    ---------------------------------------------------------------------
+24. Use the below kubeadm command on Master Node only to initialize Kubernetes
+--------------------------------------------------------------------------------
+   
+   $ sudo kubeadm init --pod-network-cidr=172.168.10.0/24
+
+25. In the above command you can use the same pod network or choose your own pod network that suits to your environment. Once the command is executed successfully, we will get the output something like below,
+
+mkdir -p $HOME/.kube
+sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
+sudo chown $(id -u):$(id -g) $HOME/.kube/config
+
+26. Verify the status of master node using the following command,
+
+   $   kubectl get nodes
+
+27. Deploy Wave as Pod Network from Master node and verify pod namespaces
+28. Execute the following kubectl command to deploy pod network from master node
+
+
+
+
+
+29. Now verify the master node status and pod namespaces using kubectl command,
+
+  $ sudo  kubectl get nodes
+  $ sudo  kubectl get pods --all-namespaces
+
+30.  Add Slave or Worker Nodes to the Cluster
+
+31. Login to first slave node (k8s-worker-node1) and run the following command to join the cluster,
+
+
+32. Now go to master node and run below command to check master and slave node status
+
+   $ kubectl get nodes

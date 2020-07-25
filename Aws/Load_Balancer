@@ -1,0 +1,13 @@
+AWS Load Balancers
+------------------
+
+1. login to AWS account 
+2. choose EC2 
+3. choose the Load Balancer and create load balancer
+4. Select load balancer type
+
+ like application LB, Network LB, Classic LB
+
+5. Configure Load Balancer 
+  
+   Name: 
