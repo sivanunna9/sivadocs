@@ -1,0 +1,47 @@
+1.What Is Ansible?
+
+Ansible is a configuration management system. It is used to set up and manage infrastructure and applications. It allows users to deploy and update applications using SSH, without needing to install an agent on a remote system.
+
+2.What’s the use of Ansible?
+Ansible is used for managing IT infrastructure and deploy software apps to remote nodes.For example, Ansible allows you to deploy as an application to many nodes with one single command. However, for that, there is a need for some programming knowledge to understand the ansible scripts.
+
+3.Explain a few of the basic terminologies or concepts in Ansible.
+
+Controller Machine: The Controller machine is responsible for provisioning the servers that are being managed. It is the machine where Ansible is 
+-------------------
+installed.
+
+Inventory: An inventory is an initialization file that has details about the different servers you are managing.
+----------
+
+Inventories: These are a list of nodes containing their respective IP addresses, servers, databases, etc. which needs to be managed.
+------------
+ 
+
+Playbook: It is a code file written in the YAML format. A playbook basically contains the tasks that need to be executed or automated.
+---------
+
+Task: Each task represents a single procedure that needs to be executed, e.g. Install a library.
+-----
+
+Module: A module is a set of tasks that can be executed. Ansible has 100s of built-in modules, but you can also create custom ones using python   language.
+-------
+
+Role: An Ansible role is a pre-defined way for organizing playbooks and other files in order to facilitate sharing and reusing portions of ----
+-----
+provisioning.
+
+
+Play: A task executed from start to finish or the execution of a playbook is called a play.
+-----
+
+Facts: Facts are global variables that store details about the system, like network interfaces or operating system.
+------
+
+Handlers: Are used to trigger the status of a service, such as restarting or stopping a service.
+---------
+
+What is Modules?
+Modules: The modules are used to manage system resources, packages, libraries, files, etc. Ansible modules can be used to automate a wide range 
+--------
+of tasks. Ansible provides around 450 modules that automate nearly every part of your environment.

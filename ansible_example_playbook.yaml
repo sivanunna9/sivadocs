@@ -1,0 +1,145 @@
+---
+- hosts: host
+  remote_user: root
+  become: true
+  tasks:
+
+     - name: Check that the somefile.conf exists
+       stat:
+         path: /home/distros
+       register: stat_result
+
+     - name: Create the file, if it doesnt exist already
+       file:
+         path: /home/distros
+         state: directory
+       when: not stat_result.stat.exists
+
+
+       #    - name: create directory with a date in name
+       # file:
+       #  path: /home/distros
+       #  state: directory
+ 
+       #     - name: Only run "update_cache=yes" if the last one is more than 3600 seconds ago
+       #    apt:
+       #  update_cache: yes
+
+     - name: Install Maven java and nginx
+       apt:  name={{item}} state=present  update_cache=yes
+       with_items:
+         - maven
+         - openjdk-8-jdk 
+         - nginx
+
+
+     - name: Start the nginx service
+       service: name=nginx state=started enabled=yes      
+
+           #    - name: Only run "update_cache=yes" if the last one is more than 3600 seconds ago
+           #       apt:
+           #    update_cache: yes
+         #   cache_valid_time: 3600    
+
+         # - name: Install the package "maven"
+         # apt:
+         #  name: maven
+
+     
+         # - name: Install java8
+         # apt:
+         #    name: openjdk-8-jdk
+      
+         #     - name: Ansible register variable basic example
+         # shell: "find apache-tomcat-8.5.55.tar.gz"
+         # args:
+         #  chdir: "/home/distros"
+         # register: find_output
+
+         # - debug:
+         # var: find_output
+
+     - name: Check that the somefile.conf exists
+       stat:
+         path: /home/distros/apache-tomcat-8.5.56.tar.gz
+       register: stat_result1
+
+     - name: download file with custom HTTP headers
+       get_url:
+         url: http://apachemirror.wuchna.com/tomcat/tomcat-8/v8.5.56/bin/apache-tomcat-8.5.56.tar.gz
+         dest: /home/distros
+       when: not stat_result1.stat.exists
+
+       #   - name: Download Tomcat
+       #   get_url:
+       #  url: https://downloads.apache.org/tomcat/tomcat-8/v8.5.55/bin/apache-tomcat-8.5.55.tar.gz
+       #  dest: /home/distros
+       #  mode: 700
+         
+     - name: Extract the Tomcat
+       unarchive:
+         src: /home/distros/apache-tomcat-8.5.56.tar.gz
+         dest: /home/distros
+         remote_src: yes
+
+     - name: Copy file with owner and permissions
+       copy:
+         src: /etc/ansible/files/tendermanagement-0.0.1-SNAPSHOT.war 
+         dest: /home/distros/apache-tomcat-8.5.56/webapps
+
+
+         # - name: Start the tomcat
+       #      shell: sh /home/distros/tomcat/apache-tomcat-8.5.55/bin/startup.sh
+       #remote_src: yes
+     
+         # - name: Start the tomcat 
+         # shell: ./startup.sh
+         # args:
+         # chdir: /home/distros/tomcat/apache-tomcat-8.5.55/bin
+         #
+       
+
+- hosts: dbservers
+  remote_user: root
+  become: true
+  tasks:
+     - name: install MySQL database tools
+       apt: name={{item}} state=present update_cache=yes
+       with_items:
+         - mysql-server
+
+     - name: install MySQL server
+       apt: name=mysql-server state=present update_cache=yes
+
+     - name: ensure MySQL started
+       service: name=mysql state=started enabled=yes
+
+     - name: ensure MySQL listening on all ports
+       lineinfile: dest=/etc/mysql/my.cnf regexp=^bind-address
+                   line="bind-address = 0.0.0.0"
+       notify: restart mysql
+
+       #     - name: create test database
+       # mysql_db: name=test state=present
+
+       #  - name: create test database user
+       #  mysql_user: name=test password=test priv=test.*:ALL host='%' state=present
+
+  handlers:
+     - name: restart mysql
+       service: name=mysql state=restarted
+
+
+
+
+- hosts: webservers
+  remote_user: root
+  become: true
+  tasks: 
+     - name: install apache2
+       apt: name={{item}} state=present update_cache=yes
+       with_items:
+         - apache2
+
+     - name: ensure apache2 started
+       service: name=apache2 state=started
