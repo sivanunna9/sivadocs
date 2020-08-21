@@ -24,8 +24,9 @@ Playbook: It is a code file written in the YAML format. A playbook basically con
 Task: Each task represents a single procedure that needs to be executed, e.g. Install a library.
 -----
 
-Module: A module is a set of tasks that can be executed. Ansible has 100s of built-in modules, but you can also create custom ones using python   language.
--------
+Module: A module is a set of tasks that can be executed. Ansible has 100s of built-in modules, but you can also create custom ones using python   -------
+language.
+
 
 Role: An Ansible role is a pre-defined way for organizing playbooks and other files in order to facilitate sharing and reusing portions of ----
 -----
@@ -45,3 +46,24 @@ What is Modules?
 Modules: The modules are used to manage system resources, packages, libraries, files, etc. Ansible modules can be used to automate a wide range 
 --------
 of tasks. Ansible provides around 450 modules that automate nearly every part of your environment.
+
+
+4.What is the difference between a variable name and an environment variable?
+
+                  Variable name                              	                          Environment variable
+                 ----------------                                                        -----------------------
+1.You need to add strings to create variable names                   1.You need existing variables to access environment variables.
+2.You can easily create multiple variable names by adding strings    2.To create environment variables we must refer advanced Ansible playbook
+3.We use the ipv4 address for variable names                         3.We use {{ ansible_env.SOME_VARIABLE }} for remote environment variables.
+
+5.What is Ansible Galaxy? 
+Galaxy is a website that lets Ansible users share their roles and modules. The Ansible Galaxy command line tool comes packed with Ansible, and it can be used to install roles from Galaxy or directly from a Source Control Management system such as Git. It can also be used to build new roles, remove existing ones and perform tasks on the Galaxy website.
+
+You can use the below command to download roles from the Galaxy website:
+
+$ansible-galaxy install username.role_name
+
+6. What are Ad-hoc commands? Give an example.
+Ad-hoc commands are simple one-line commands used to perform a certain task. You can think of Adhoc commands as an alternative to writing playbooks. An example of an Adhoc command is as follows:
+
+ansible host -m netscaler -a "nsc_host=nsc.example.com user=apiuser password=apipass"

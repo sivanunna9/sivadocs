@@ -608,7 +608,8 @@
 		- git:// - default port 9418
 		- http:// - default port 80
 		- https:// - default port 443
-
+71.) what is staging?
+ These files are also referred to as "untracked files." Staging area is files that are going to be a part of the next commit,
                   
 
 =========================
