@@ -7,9 +7,7 @@ Ansible is used for managing IT infrastructure and deploy software apps to remot
 
 3.Explain a few of the basic terminologies or concepts in Ansible.
 
-Controller Machine: The Controller machine is responsible for provisioning the servers that are being managed. It is the machine where Ansible is 
--------------------
-installed.
+Controller Machine: The Controller machine is responsible for provisioning the servers that are being managed. It is the machine where Ansible is installed.
 
 Inventory: An inventory is an initialization file that has details about the different servers you are managing.
 ----------
@@ -24,13 +22,10 @@ Playbook: It is a code file written in the YAML format. A playbook basically con
 Task: Each task represents a single procedure that needs to be executed, e.g. Install a library.
 -----
 
-Module: A module is a set of tasks that can be executed. Ansible has 100s of built-in modules, but you can also create custom ones using python   -------
-language.
+Module: A module is a set of tasks that can be executed. Ansible has 100s of built-in modules, but you can also create custom ones using python language.
 
 
-Role: An Ansible role is a pre-defined way for organizing playbooks and other files in order to facilitate sharing and reusing portions of ----
------
-provisioning.
+Role: An Ansible role is a pre-defined way for organizing playbooks and other files in order to facilitate sharing and reusing portions of provisioning.
 
 
 Play: A task executed from start to finish or the execution of a playbook is called a play.
@@ -43,9 +38,7 @@ Handlers: Are used to trigger the status of a service, such as restarting or sto
 ---------
 
 What is Modules?
-Modules: The modules are used to manage system resources, packages, libraries, files, etc. Ansible modules can be used to automate a wide range 
---------
-of tasks. Ansible provides around 450 modules that automate nearly every part of your environment.
+Modules: The modules are used to manage system resources, packages, libraries, files, etc. Ansible modules can be used to automate a wide range of tasks. Ansible provides around 450 modules that automate nearly every part of your environment.
 
 
 4.What is the difference between a variable name and an environment variable?
@@ -67,3 +60,14 @@ $ansible-galaxy install username.role_name
 Ad-hoc commands are simple one-line commands used to perform a certain task. You can think of Adhoc commands as an alternative to writing playbooks. An example of an Adhoc command is as follows:
 
 ansible host -m netscaler -a "nsc_host=nsc.example.com user=apiuser password=apipass"
+
+7.what is ansible roles.
+
+But what are Ansible roles exactly? They're groupings of variables, tasks, handlers and other components within a standard file structure. These roles provide a way to break out an Ansible playbook into multiple independent files. In addition to promoting reuse, roles offer an easy way to share Ansible content among multiple users.
+
+                               (or)
+
+Roles are ways of automatically loading certain vars_files, tasks, and handlers based on a known file structure. Grouping content by roles also allows easy sharing of roles with other users
+
+8.How does Ansible work?
+Ansible, unlike other configuration management tools, is categorized into two types of servers – Controlling machines and Nodes. Controlling machine is where Ansible is installed and nodes are the ones that are managed by the controlling machines through SSH. There is an inventory file in the controlling machine that holds the location of the node systems. Ansible deploys modules on the node systems by running the playbook on the controlling machine. Ansible is agentless, that means there is no need to have a third party tool to make a connection between one node and the other.
