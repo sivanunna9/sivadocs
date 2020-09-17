@@ -1,0 +1,2 @@
+CREATE USER 'siva'@'localhost' IDENTIFIED BY 'Siva@123';
+GRANT ALL PRIVILEGES ON db_name.* TO 'siva'@'localhost' WITH GRANT OPTION;

@@ -10,7 +10,9 @@ knife cookbook upload <c.b name> ->to upload cookbook
 knife cookbook list 
 knife cookbook delete <name of c.b> 0.1.0
 
+** $ knife bootstrap 172.17.0.2 -U sai -P 'sai' --sudo --use-sudo-password --node-name chef --run-list 'recipe[nginx]' -y
 knife bootstrap 172.17.0.2 --ssh-user sai --ssh-password 'sai' --sudo --use-sudo-password --node-name chfserver	
+
 
 knife node list
 knife node show <node name> 

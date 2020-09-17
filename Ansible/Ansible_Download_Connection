@@ -64,8 +64,20 @@ git clone https://github.com/sivanunna9/3-tier-ansible.git
 vi ansible.cfg
 #private_key_file=/home/ansible/.ssh/NVirginiai.pem  //add you pem path in this file
 
+aws_access_key_id=AKIASB7MQNPY3PW2T6XU
+aws_secret_access_key=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
+export AWS_ACCESS_KEY_ID="AKIASB7MQNPYRCUK33XL"
+export AWS_SECRET_ACCESS_KEY="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"
+export AWS_DEFAULT_REGION=us-east-2
+
+
 ansible -i ec2.py -u ubuntu us-east-2 -m ping 
-ansible -m ping tag_Name_node
+ansible -u ubuntu tag_Name_node -m ping
+ansible -u ubuntu tag_Name_master-tomcatserver -m ping
+
+ansible -m ping -u ubuntu tag_Name_master-tomcatserver
+ansible-playbook -i ec2.py ./playbooks/tomcat.yaml -u ubuntu  -vvv
+
 
 4. run below ansible sample playbook 
 
@@ -132,6 +144,32 @@ ansible -m ping tag_Name_node
          dest: /home/distros/apache-tomcat-8.5.56/webapps
 
 
+clear the cache
+./ec2.py --refresh-cache
+
+
+
+
+
+
+GRANT ALL ON *.* TO ubuntu@'%' IDENTIFIED BY 'ubuntu';
+GRANT ALL PRIVILEGES ON *.* TO 'ubuntu'@'%' IDENTIFIED BY 'ubuntu';
+
+
+
+
+- name: Retrieve stuff from mysql
+  command: >
+    sudo mysql --user=root --password=root mysql
+    --host=127.0.0.1 --batch --skip-column-names
+    --execute="UPDATE user SET plugin='mysql_native_password' WHERE User='root';"
+  register: stuff
+  check_mode: no
+  changed_when: False
+
+- name: Do something with stuff
+  debug: "{{ item }}"
+  with_items: stuff.stdout_lines
 
 
 
@@ -139,3 +177,52 @@ ansible -m ping tag_Name_node
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+- name: Copy war file
+      # copy: src=/home/siva/.jenkins/workspace/tender-management/tendermanagement/target/tendermanagement-0.0.1-SNAPSHOT.war dest=/home/ubuntu
+     - name: Copy file with owner and permission, using symbolic representation
+       copy:
+         src: mysqldb.sh
+         dest: /home/ubuntu/mysqldb.sh
+         owner: root
+         group: root
+         mode: u=rwx,g=rx,o=rx
+
+- name: Execute the command in remote shell; stdout goes to the specified file on the remote.
+       command: /home/ubuntu/mysqldb.sh >> somelog.txt
+
+
+
+
+- name: Copy Tomcat service from local to remote
+       copy:
+         src: tomcat.service
+         dest: /etc/systemd/system/
+         mode: 0755
+
+
+USE mysql;
+ CREATE USER 'ubuntu'@'localhost' IDENTIFIED BY '';
+GRANT ALL PRIVILEGES ON *.* TO 'ubuntu'@'%';
+ UPDATE user SET plugin='mysql_native_password' WHERE User='ubuntu';
+ FLUSH PRIVILEGES;
+exit;
+
+
+
+
+"UPDATE user SET plugin='mysql_native_password' WHERE User='root';","FLUSH PRIVILEGES;"

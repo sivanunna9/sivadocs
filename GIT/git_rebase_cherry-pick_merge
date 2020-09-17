@@ -1,0 +1,65 @@
+git rebasr
+===========
+feturu branch
+-----------------
+commit 14d1aab1357df577a1e132c9219970e3e434b96a (HEAD -> future)
+Author: sivakiran <sivakiran@gmail.com>
+Date:   Wed Sep 2 16:54:24 2020 +0530
+
+    g.java
+
+master branch
+-------------
+commit 14d1aab1357df577a1e132c9219970e3e434b96a (HEAD -> master, future)
+Author: sivakiran <sivakiran@gmail.com>
+Date:   Wed Sep 2 16:54:24 2020 +0530
+
+    g.java
+
+git cherry-pick
+================
+
+feture branch
+--------------
+commit a9e07e99b3ba66f0dd825a882f1c37e087c3631e (HEAD -> future)
+Author: sivakiran <sivakiran@gmail.com>
+Date:   Wed Sep 2 16:58:49 2020 +0530
+
+    h.java
+
+master branch
+--------------
+commit 7816a219b01b105907905f0e63812a13256b2ad5 (HEAD -> master)
+Author: sivakiran <sivakiran@gmail.com>
+Date:   Wed Sep 2 16:58:49 2020 +0530
+
+    h.java
+
+
+git merge
+==========
+
+feture branch
+-------------
+commit 3dc198f8936b591d67fb88b42fd6a884e0ae196d (HEAD -> future)
+Author: sivakiran <sivakiran@gmail.com>
+Date:   Wed Sep 2 17:08:44 2020 +0530
+
+    i.java
+
+master branch
+--------------
+
+commit e0d5bd87745ce62b13e0458e06a013bd8c3673d0 (HEAD -> master)
+Merge: 7816a21 3dc198f
+Author: sivakiran <sivakiran@gmail.com>
+Date:   Wed Sep 2 17:12:09 2020 +0530
+
+    Merge branch 'future'
+
+commit 3dc198f8936b591d67fb88b42fd6a884e0ae196d (future)
+Author: sivakiran <sivakiran@gmail.com>
+Date:   Wed Sep 2 17:08:44 2020 +0530
+
+    i.java
+
