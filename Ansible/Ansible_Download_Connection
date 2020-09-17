@@ -64,19 +64,8 @@ git clone https://github.com/sivanunna9/3-tier-ansible.git
 vi ansible.cfg
 #private_key_file=/home/ansible/.ssh/NVirginiai.pem  //add you pem path in this file
 
-aws_access_key_id=AKIASB7MQNPY3PW2T6XU
-aws_secret_access_key=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
-export AWS_ACCESS_KEY_ID="AKIASB7MQNPYRCUK33XL"
-export AWS_SECRET_ACCESS_KEY="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"
-export AWS_DEFAULT_REGION=us-east-2
 
 
-ansible -i ec2.py -u ubuntu us-east-2 -m ping 
-ansible -u ubuntu tag_Name_node -m ping
-ansible -u ubuntu tag_Name_master-tomcatserver -m ping
-
-ansible -m ping -u ubuntu tag_Name_master-tomcatserver
-ansible-playbook -i ec2.py ./playbooks/tomcat.yaml -u ubuntu  -vvv
 
 
 4. run below ansible sample playbook 
