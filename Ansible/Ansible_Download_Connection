@@ -139,8 +139,6 @@ clear the cache
 
 
 
-
-
 GRANT ALL ON *.* TO ubuntu@'%' IDENTIFIED BY 'ubuntu';
 GRANT ALL PRIVILEGES ON *.* TO 'ubuntu'@'%' IDENTIFIED BY 'ubuntu';
 
