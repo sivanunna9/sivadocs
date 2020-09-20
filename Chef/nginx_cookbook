@@ -6,7 +6,16 @@ package "nginx" do
   action :install
 end
 
+cookbook_file "/var/www/html" do
+  source "index.html"
+end 
+
+
 service "nginx" do
   action [:enable, :start]
 end
 
+
+execute "this command will start nginx server" do
+  command "service nginx start"
+end

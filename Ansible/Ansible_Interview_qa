@@ -72,6 +72,15 @@ Roles are ways of automatically loading certain vars_files, tasks, and handlers 
 8.How does Ansible work?
 Ansible, unlike other configuration management tools, is categorized into two types of servers – Controlling machines and Nodes. Controlling machine is where Ansible is installed and nodes are the ones that are managed by the controlling machines through SSH. There is an inventory file in the controlling machine that holds the location of the node systems. Ansible deploys modules on the node systems by running the playbook on the controlling machine. Ansible is agentless, that means there is no need to have a third party tool to make a connection between one node and the other.
 
+9. Explain different modules in ansible?
+There are two types of modules in Ansible namely core modules and extra modules. Modules in Ansible are idempotent and the clients can perform the same result by using modules in Ansible for the operation to be idempotent.
+
+Core modules– The Ansible team gives more importance to these modules over extra modules. Core modules are always shipped with Ansible software.
+
+Extra modules– These modules are maintained by Ansible community and are reusable but receive a lower rate of response to issues. These modules are bundled with Ansible but can be separately available in future.
+
+
+
 
 
 
