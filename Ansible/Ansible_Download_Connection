@@ -71,12 +71,6 @@ export AWS_SECRET_ACCESS_KEY=
 export AWS_DEFAULT_REGION=
 
 
-ansible -i ec2.py -u ubuntu us-east-2 -m ping 
-ansible -u ubuntu tag_Name_node -m ping
-ansible -u ubuntu tag_Name_master-tomcatserver -m ping
-
-ansible -m ping -u ubuntu tag_Name_master-tomcatserver
-ansible-playbook -i ec2.py ./playbooks/tomcat.yaml -u ubuntu  -vvv
 
 
 4. run below ansible sample playbook 
@@ -146,8 +140,6 @@ ansible-playbook -i ec2.py ./playbooks/tomcat.yaml -u ubuntu  -vvv
 
 clear the cache
 ./ec2.py --refresh-cache
-
-
 
 
 
