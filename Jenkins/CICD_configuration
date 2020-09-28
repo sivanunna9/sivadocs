@@ -1,0 +1,135 @@
+My CICD configuration
+======================
+
+1.In my organization we are created jenkins CICD job here we are created main 4 jobs 
+ 
+i) clone job
+ii) build job
+iii)promote job
+iv)deployment job
+v) automation job
+
+2. The clone job we are created MultiJob Project pugin and Multiple SCMs plugin
+
+3. In the source code management choose and the select  Multiple SCMs then copy the git url
+4. In build section choose the multijob phase 
+5. phase name is build job 
+6. and phase job is build
+7.Other 3 jobs are Freestyle project
+8. In build job in configure build section choose the execute shell and write the code
+#!/bin/bash
+cd $WORKSPACE/tendermanagement
+GITHASH=$(git rev-parse HEAD)
+#CHECKCAHE=`echo tender`
+DOCKERAPPIMAGE=`docker images tenderimag | awk '{print $2}' | tail -n+2 ` 
+
+if [ $GITHASH == $DOCKERAPPIMAGE ] 
+then 
+    #If they are equal then print this 
+    echo "true"
+    echo "***********************************"
+	echo current container version\(s\) $DOCKERAPPIMAGE
+	echo New version $GITHASH
+	echo "***********************************"
+else
+    #else print this 
+    echo "false"
+    echo "***********************************"
+	echo current container version\(s\) $DOCKERAPPIMAGE
+	echo New version $GITHASH
+	echo "***********************************"
+     
+    
+    docker rmi -f docker-repo:5000/tenderimag:$DOCKERAPPIMAGE
+    mvn install
+    docker build -t tenderimag:$GITHASH .
+    
+fi 
+
+#mvn install
+#commit=$(git rev-parse HEAD)
+#sudo docker rmi -f tenderimag:$commit 
+#docker build -t tenderimag:$commit .
+#docker tag tenderimag:$commit docker-repo:5000/tenderimag:$commit
+#docker push docker-repo:5000/tenderimag:$commit
+#sudo docker rmi -f tenderimag:$commit
+#docker run -itd --name tender -p 8087:8080 docker-repo:5000/tenderimag:$commit
+#echo "***********************************"
+#	echo current container version\(s\) $DOCKERAPPIMAGE
+#	echo New version $GITHASH
+	#echo Checkcache $( [[ -n ${CHECKCAHE:-} ]] && echo "true" || echo "false" )
+#	echo "**********************************"
+
+
+9. In promote job in configure build section choose the execute shell and write the code
+#!/bin/bash
+cd $WORKSPACE/tendermanagement
+GITHASH=$(git rev-parse HEAD)
+DOCKERAPPIMAGE=`docker images tenderimag | awk '{print $2}' | tail -n+2 ` 
+
+if [ $GITHASH == $DOCKERAPPIMAGE ] 
+then 
+    #If they are equal then print this 
+    echo "true"
+    echo "***********************************"
+	echo current container version\(s\) $DOCKERAPPIMAGE
+	echo New version $GITHASH
+	echo "***********************************"
+else
+    #else print this 
+    echo "false"
+    echo "***********************************"
+	echo current container version\(s\) $DOCKERAPPIMAGE
+	echo New version $GITHASH
+	echo "***********************************"
+    docker rmi -f tenderimag:$DOCKERAPPIMAGE
+    docker tag tenderimag:$GITHASH docker-repo:5000/tenderimag:$GITHASH
+    if [ $? -eq 0 ]
+    then
+    	echo "docker image tag created successfully"
+    else
+    	echo "docker image tag not created"
+    fi
+    docker push docker-repo:5000/tenderimag:$GITHASH
+    if [ $? -eq 0 ]
+    then
+    	echo "docker image pushed to dockerprivate repo successfully"
+    else
+    	echo "docker image not pushed to docker private repo"
+    fi
+fi 
+
+
+10. In deployment job in configure build section choose the execute shell and write the code
+
+#!/bin/bash
+cd $WORKSPACE/tendermanagement
+GITHASH=$(git rev-parse HEAD)
+docker rm -f tender
+docker pull docker-repo:5000/tenderimag:$GITHASH
+if [ $? -eq 0 ]
+then
+    	echo "docker image pulled successfully"
+else
+    	echo "docker image not pulled "
+fi
+docker run -itd --name tender --restart=unless-stopped docker-repo:5000/tenderimag:$GITHASH
+if [ $? -eq 0 ]
+then
+    	echo "docker conatiner successfully created"
+else
+    	echo "docker conatiner not created"
+fi
+
+
+
+
+
+
+
+
+
+
+
+
+
