@@ -203,6 +203,10 @@ Bootstrap the node:
 
 knife bootstrap 172.17.0.2 --ssh-user sai --ssh-password 'sai' --sudo --use-sudo-password --node-name sai --run-list 'recipe[learn_chef_apache2]'	 
 
+  $  knife bootstrap 172.17.0.2 --ssh-user sai --ssh-password 'sai' --sudo --use-sudo-password --node-name chef --run-list 'recipe[nginx]' -y
+
+** $ knife bootstrap 172.17.0.2 -U sai -P 'sai' --sudo --use-sudo-password --node-name chef --run-list 'recipe[nginx]' -y
+
 - Bootstrap performs below steps:
 	1. Installs chef-client in node.
 	2. Associates the node to Chef server.

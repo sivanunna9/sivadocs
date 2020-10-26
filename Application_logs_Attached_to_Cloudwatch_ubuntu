@@ -1,0 +1,67 @@
+ Sending Linux OS logs & Tomcat logs to AWS Cloudwatch | Ubuntu instance
+==========================================================================
+
+1. Create role and attached Policies CloudWatchFullAccess to the role
+
+2. Launch instance and attached role
+
+3. Login to the instance and install package.
+3. To run it directly from the internet, use the following commands and follow the prompts:
+ 
+  $ curl https://s3.amazonaws.com/aws-cloudwatch/downloads/latest/awslogs-agent-setup.py -O
+
+  $ sudo python ./awslogs-agent-setup.py --region us-east-2
+
+4. If the preceding command does not work, try the following:
+
+  $ sudo python3 ./awslogs-agent-setup.py --region us-east-2
+
+5. To download and run it standalone, use the following commands and follow the prompts:
+
+  $ curl https://s3.amazonaws.com/aws-cloudwatch/downloads/latest/awslogs-agent-setup.py -O
+  
+  $ curl https://s3.amazonaws.com/aws-cloudwatch/downloads/latest/AgentDependencies.tar.gz -O
+
+  $ tar xvf AgentDependencies.tar.gz -C /tmp/
+  
+  $ sudo python ./awslogs-agent-setup.py --region us-east-2 --dependency-path /tmp/AgentDependencies
+
+6. Edit file /var/awslogs/etc/awscli.conf and change your AWS Region.
+  
+   my region us-east-2
+
+7. Edit file /var/awslogs/etc/awslogs.conf and verify following lines
+
+8. Default logs path
+
+[/var/log/syslog]
+datetime_format = %b %d %H:%M:%S
+file = /var/log/syslog
+buffer_duration = 5000
+log_stream_name = {instance_id}
+initial_position = start_of_file
+log_group_name = /var/log/syslog
+
+
+9. If you want tomcat logs give the exect path for example
+
+[/home/ubuntu/tomcat/logs/catalina.out]
+datetime_format = %b %d %H:%M:%S
+file = /home/ubuntu/tomcat/logs/catalina.out
+buffer_duration = 5000
+log_stream_name = {instance_id}
+initial_position = start_of_file
+log_group_name = /home/ubuntu/tomcat/logs/catalina.out
+
+
+
+10. Restart the awslogs service
+ 
+  $ sudo service awslogs start
+  $ sudo service awslogs status
+  $ sudo service awslogs restart
+  $ sudo systemctl  enable awslogs  
+
+
+Reference link:- https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/QuickStartEC2Instance.html
+==============

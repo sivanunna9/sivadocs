@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mysql
+spec:
+  selector:
+    matchLabels:
+      app: mysql
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: mysql
+    spec:
+      containers:
+      - image: mysql:latest
+        name: mysql
+        imagePullPolicy: "IfNotPresent"
+        env:
+        - name: MYSQL_ROOT_PASSWORD
+          value: sivakiran
+        - name: MYSQL_DATABASE
+          value: tender  
+        ports:
+        - containerPort: 3306
+          name: mysql
+        volumeMounts:
+        - name: mysql-persistent-storage
+          mountPath: /docker-entrypoint-initdb.d   //my sql init script will 
+                                                     get copied from hostpath 
+                                                     of persistant volume. 
+      volumes:
+      - name: mysql-persistent-storage
+        persistentVolumeClaim:
+          claimName: mysql-initdb-pv-claim
+

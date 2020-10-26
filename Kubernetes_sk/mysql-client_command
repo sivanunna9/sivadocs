@@ -1,0 +1,5 @@
+mysql-client commcad
+----------------------
+
+$ kubectl run -it --rm --image=mysql:latest --restart=Never mysql-client -- mysql -h mysql -psivakiran
+

@@ -1,0 +1,228 @@
+Download the Ansible in AWS EC2 Instances_Ubuntu
+--------------------------------------------------
+1. Update 
+$ sudo apt-get update
+
+2.Add the ansible repository using bellow command 
+
+$  sudo apt-add-repository ppa:ansible/ansible
+
+3. Update
+
+$ sudo apt update
+ 
+4. Install the ansible
+
+$ sudo apt install ansible
+
+5.In hosts file add the node machine IP assress like bellow formate
+
+$ sudo vi /etc/ansible/hosts
+   
+[aws]
+172.31.16.35 ansible_ssh_user=ubuntu ansible_ssh_private_key_file=/home/new-key.pwm
+[host]
+3.19.223.103 ansible_ssh_user=ubuntu ansible_ssh_private_key_file=/home/new-key.pem
+
+  
+6.In ansible.cfg file uncomment the inventory
+ 
+$ sudo vi /etc/ansible/ansible.cfg 
+
+inventory      = /etc/ansible/hosts
+
+7.Then generate he ssh-keygen in master machine using bellow command
+
+$ ssh-keygen
+
+8.Copy the id_rsa.pub to the node machine
+$ ssh-copy-id ubuntu@172.31.36.230
+$ ssh-copy-id -f ubuntu@172.31.36.230
+         (or)
+ Copy the manually
+
+9.In node machine sudoers file add the ubuntu user like bellow 
+
+ ubuntu	ALL=NOPASSWD: ALL
+
+10.Check the connection through ssh bellow command
+ 
+$ ssh ubuntu@172.31.36.230i
+
+How install ansible dyanmc inventory
+-------------------------------------
+
+1.lanuch two instances in aws any region along with EC2 full access role and attach with same instances or please install awscli and create aws user and configure awscli in any one of master instance.
+
+2. 1st instance we considered as a master and install below packages.
+
+ansible -m ping all
+sudo apt-get install -y python-boto
+3.clone blow git repo.
+git clone https://github.com/sivanunna9/3-tier-ansible.git
+ cd 3-tier-ansible
+vi ansible.cfg
+#private_key_file=/home/ansible/.ssh/NVirginiai.pem  //add you pem path in this file
+
+aws_access_key_id=
+aws_secret_access_key=
+export AWS_ACCESS_KEY_ID=
+export AWS_SECRET_ACCESS_KEY=
+export AWS_DEFAULT_REGION=
+
+
+ansible -i ec2.py -u ubuntu us-east-2 -m ping 
+ansible -u ubuntu tag_Name_node -m ping
+ansible -u ubuntu tag_Name_master-tomcatserver -m ping
+
+ansible -m ping -u ubuntu tag_Name_master-tomcatserver
+ansible-playbook -i ec2.py ./playbooks/tomcat.yaml -u ubuntu  -vvv
+
+
+4. run below ansible sample playbook 
+
+---
+- hosts: tag_Name_node
+  
+  remote_user: root
+  become: true
+  tasks:
+
+     - name: Check that the /home/distros folder exists
+       stat:
+         path: /home/distros
+       register: stat_result
+
+     - name: Create the file, if it doesnt exist already
+       file:
+         path: /home/distros
+         state: directory
+       when: not stat_result.stat.exists
+
+
+       #    - name: create directory with a date in name
+       # file:
+       #  path: /home/distros
+       #  state: directory
+
+         # - name: Install Maven
+         # apt: name={{items}} state=present update_cache=yes
+         #with_items:
+         #- maven
+
+     - name: Only run "update_cache=yes" if the last one is more than 3600 seconds ago
+       apt:
+         update_cache: yes
+         #   cache_valid_time: 3600    
+
+     - name: Install the package "maven"
+       apt:
+         name: maven
+     - name: Install java8
+       apt:
+         name: openjdk-8-jdk
+     - name: Check that the download tomcat exists
+       stat:
+         path: /home/distros/apache-tomcat-8.5.56.tar.gz
+       register: stat_result1
+
+     - name: download file with custom HTTP headers
+       get_url:
+         url: https://downloads.apache.org/tomcat/tomcat-8/v8.5.56/bin/apache-tomcat-8.5.56.tar.gz
+         dest: /home/distros
+       when: not stat_result1.stat.exists
+
+     - name: Extract the Tomcat
+       unarchive:
+         src: /home/distros/apache-tomcat-8.5.56.tar.gz
+         dest: /home/distros
+         remote_src: yes
+
+     - name: Copy file with owner and permissions
+       copy:
+         src: /etc/ansible/files/tendermanagement-0.0.1-SNAPSHOT.war
+         dest: /home/distros/apache-tomcat-8.5.56/webapps
+
+
+clear the cache
+./ec2.py --refresh-cache
+
+
+
+
+
+
+GRANT ALL ON *.* TO ubuntu@'%' IDENTIFIED BY 'ubuntu';
+GRANT ALL PRIVILEGES ON *.* TO 'ubuntu'@'%' IDENTIFIED BY 'ubuntu';
+
+
+
+
+- name: Retrieve stuff from mysql
+  command: >
+    sudo mysql --user=root --password=root mysql
+    --host=127.0.0.1 --batch --skip-column-names
+    --execute="UPDATE user SET plugin='mysql_native_password' WHERE User='root';"
+  register: stuff
+  check_mode: no
+  changed_when: False
+
+- name: Do something with stuff
+  debug: "{{ item }}"
+  with_items: stuff.stdout_lines
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+- name: Copy war file
+      # copy: src=/home/siva/.jenkins/workspace/tender-management/tendermanagement/target/tendermanagement-0.0.1-SNAPSHOT.war dest=/home/ubuntu
+     - name: Copy file with owner and permission, using symbolic representation
+       copy:
+         src: mysqldb.sh
+         dest: /home/ubuntu/mysqldb.sh
+         owner: root
+         group: root
+         mode: u=rwx,g=rx,o=rx
+
+- name: Execute the command in remote shell; stdout goes to the specified file on the remote.
+       command: /home/ubuntu/mysqldb.sh >> somelog.txt
+
+
+
+
+- name: Copy Tomcat service from local to remote
+       copy:
+         src: tomcat.service
+         dest: /etc/systemd/system/
+         mode: 0755
+
+
+USE mysql;
+ CREATE USER 'ubuntu'@'localhost' IDENTIFIED BY '';
+GRANT ALL PRIVILEGES ON *.* TO 'ubuntu'@'%';
+ UPDATE user SET plugin='mysql_native_password' WHERE User='ubuntu';
+ FLUSH PRIVILEGES;
+exit;
+
+
+
+
+"UPDATE user SET plugin='mysql_native_password' WHERE User='root';","FLUSH PRIVILEGES;"
