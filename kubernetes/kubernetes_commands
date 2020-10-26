@@ -1,0 +1,39 @@
+Kubernetes commands
+-------------------
+
+1.It will display the all the pods
+ 
+$ kubectl get pods --all-nampspaces
+$ kubectl get pods
+
+2. Display the pod information 
+
+ $ kubectl describe pod -n <namespace>  <name>
+
+3. How to apply the file
+
+ $ kubectl apply -f <file name >
+ $ kubectl apply -f nginx-ser.yaml 
+ $  kubectl apply -f nginx-ser.yaml --dry-run
+
+4. How to delete the file 
+  
+ $ kubectl delete -f nginx-ser.yaml 
+
+5. see the only services 
+
+ $ kubectl get svc
+
+6. Display the all pods, svc, deploy
+
+ $ kubectl get po,svc,deploy,ingress
+
+7. Display the PersistentVolume
+
+ $ kubectl get pv (or) rc 
+
+8. $ kubectl run -it --rm --image=mysql:5.6 --restart=Never mysql-client --mysql -h mysql -ppassword
+
+9. Delete pod
+
+  $ kubectl delete pod <name>

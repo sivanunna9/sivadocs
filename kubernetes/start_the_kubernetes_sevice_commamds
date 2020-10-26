@@ -1,0 +1,9 @@
+Start the service using below command
+--------------------------------------
+
+The connection to the server 192.168.2.167:6443 was refused - did you specify the right host or port?
+ 
+   $ sudo -i
+   $ swapoff -a
+   $ exit
+   $ strace -eopenat kubectl version

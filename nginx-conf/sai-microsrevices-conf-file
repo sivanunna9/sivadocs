@@ -1,0 +1,14 @@
+ server {
+   listen 80;
+   location /service1 {
+     proxy_pass http://127.0.0.1:8000/currency-exchange/from/EUR/to/INR/;
+   }
+  location /service2 {
+     proxy_pass http://localhost:8765/currency-exchange-service/currency-exchange/from/EUR/to/INR/;
+   }
+    location /currency-exchange {
+     proxy_pass http://127.0.0.1:8000/currency-exchange/from/EUR/to/INR/;
+   }
+ }
+
+## reference link:- https://dzone.com/articles/configuring-nginx-to-proxy-rest-requests-across-mu

@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tomcat
+  labels:
+    app: tomcat
+spec:
+  selector:
+    matchLabels:
+      app: tomcat
+      tier: frontend
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: tomcat
+        tier: frontend
+    spec:
+      containers:
+      - image: t9:latest 
+        imagePullPolicy: "IfNotPresent"
+        name: tomcat
+        env:
+        - name: DB_PORT_3306_TCP_ADDR
+          value: mysql                  #service name of mysql
+        - name: DB_ENV_MYSQL_DATABASE
+          value: tender
+        - name: DB_ENV_MYSQL_ROOT_PASSWORD
+          value: sivakiran
+        - name: "NETWORK_HOST"
+          value: "eth0:ipv4"
+        ports:
+        - containerPort: 8080
+          name: myport
+        volumeMounts:
+        - name: tomcat-persistent-storage
+          mountPath: /usr/local/tomcat/logs/
+      volumes:
+      - name: tomcat-persistent-storage
+        persistentVolumeClaim:
+          claimName: tomcat-pv-claim
+

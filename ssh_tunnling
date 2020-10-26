@@ -1,0 +1,19 @@
+Tunnling the application or mysl RDS
+------------------------------------- 
+Application Tunnling 
+--------------------
+
+$ ssh -i new-kek.pem -L 8082:localhost:8080 ubuntu@52.14.64.65
+
+  ssh -i <aws pem key> -L <localhostport>:<rds privateip>:<instanceport> <instance user & IP address>
+
+
+MYSQL RDS tunnling
+-------------------
+
+$ ssh -i new-key.pem -L 3306:172.31.4346:3306 ubuntu@52.14.64.65
+  ssh -i <aws pem key> -L <localhostport>:<rds privateip>:<instanceport> <instance user & IP address>
+
+
+$ mysql -h 127.0.0.1 -P 3306 -uadmin -p 
+

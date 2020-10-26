@@ -1,0 +1,44 @@
+#!/bin/bash
+  
+
+SERVICES=( 'nginx' )
+
+ for i in "${SERVICES}"
+
+  do
+
+      if [[ "$(service $i status)" != "stop" ]]
+
+     then
+
+     service $i start
+
+     echo " Nginx is start "
+
+      fi
+
+  done
+
+
+
+#!/bin/bash
+  
+
+SERVICES=( 'nginx' )
+
+ for i in "${SERVICES}"
+
+  do
+
+      if [[ "$(service $i status)" != "start" ]]
+
+     then
+
+     service $i stop
+
+     echo " Nginx is stop "
+
+      fi
+
+  done
+
