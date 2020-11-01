@@ -1,0 +1,106 @@
+Sai Main Project
+=================
+
+Description:- In this project, the frontend is used ReactJS and the Backend is used spring-boot
+
+Predependences are:-
+-------------------
+1.ReactJS
+2.Spring-boot
+3.Maven
+4.node 
+5.npm
+
+Creating the Jenkins pipeline Project
+--------------------------------------
+1.Login to the jenkins server and click the new item and give the item name and select the pipeline project
+2.In the Pipeline copy the below script.
+
+
+node {
+    stage ('Clone the sai-project Git repository') {
+        sh 'rm -rf /home/siva/.jenkins/workspace/sai/sai-project-repo'
+        sh 'rm -rf /home/siva/.jenkins/workspace/sai/frontend-project.git'
+        sh  'git clone https://github.com/PPMtool/sai-project-repo.git'
+      
+        sh 'git clone https://github.com/PPMtool/frontend-project.git'
+    }
+    //stage ('Build backend') {
+      //    sh script:'''
+        // cd /home/siva/.jenkins/workspace/sai/sai-project-repo
+       // GITHASH=$(git rev-parse HEAD)
+    //    mvn -f /home/siva/.jenkins/workspace/sai/sai-project-repo install
+      //  '''//
+    
+    stage ('Create Docker image for backend') {
+     sh script:'''
+     
+    cd /home/siva/.jenkins/workspace/sai/sai-project-repo
+     GITHASH=$(git rev-parse HEAD)
+     bash build.sh
+     '''
+    //docker build -t sai-backend-img .
+   // docker run -itd --name sai-backend -p 8084:8080 sai-backend-img 
+    }
+    stage ('promote Docker image to ECR ') {
+     sh script:'''
+     
+    cd /home/siva/.jenkins/workspace/sai/sai-project-repo
+     GITHASH=$(git rev-parse HEAD)
+     bash promote.sh
+     '''
+    
+    }
+    
+}
+
+node {
+    
+    stage ('Build frontend ') {
+        sh script:'''
+        
+          cd /home/siva/.jenkins/workspace/sai/frontend-project
+          npm run build
+          
+          sudo tar -zcvf build.tar.gz build
+          cd /etc/ansible/3-tier-ansible/roles/nginx/files
+          sudo rm -rf build.tar.gz
+          cd -
+          sudo cp -r build.tar.gz /etc/ansible/3-tier-ansible/roles/nginx/files
+          sudo chmod 644 /etc/ansible/3-tier-ansible/roles/nginx/files/build.tar.gz
+          
+          
+          
+        '''
+    }
+    stage ('deploy Docker image to EC2 ') {
+     sh script:'''
+     
+    cd /home/siva/.jenkins/workspace/sai/sai-project-repo
+     GITHASH=$(git rev-parse HEAD)
+     
+    cd /etc/ansible/3-tier-ansible
+    ansible-playbook -i ec2.py ./nginx.yml -u ubuntu  -v -e "my_var=$GITHASH"
+     '''
+    
+    }
+}
+ 
+
+3.Then click on the Build Now option.
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
