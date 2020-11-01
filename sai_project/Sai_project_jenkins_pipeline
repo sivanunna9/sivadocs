@@ -88,7 +88,11 @@ node {
  
 
 3.Then click on the Build Now option.
- 
+
+4.Create the Ansible role for the nginx example 
+   sivanunna9/3-tier-ansible/role/nginx --------------> Playbook
+   sivanunna9/3-tier-ansible/roles/deploy-kiran-------->Playbook
+
 
 
 
