@@ -2,6 +2,107 @@ CREATE USER 'kishore'@'%' IDENTIFIED BY 'kishore';
 
 GRANT ALL PRIVILEGES ON test.* To 'kishore'@'%';
 
+
+
 https://www.digitalocean.com/community/tutorials/how-to-install-mysql-on-ubuntu-18-04
 https://www.mulesoft.com/tcat/tomcat-linux
+
+
+ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'root';
+
+
+
+
+
+CREATE USER 'repl'@'%' IDENTIFIED BY 'slavepassword';
+
+GRANT REPLICATION SLAVE ON *.* TO 'repl'@'%';
+
+
+example:-
+-------
+
+CREATE USER 'repl'@'%' IDENTIFIED BY 'slavepassword';
+GRANT REPLICATION SLAVE ON *.* TO 'repl'@'%';
+
+CREATE USER 'kishore'@'%' IDENTIFIED BY 'password';
+GRANT REPLICATION SLAVE ON *.* TO 'kishore'@'%';
+
+CHANGE MASTER TO
+MASTER_HOST='172.31.7.132',
+MASTER_USER='kishoer',
+MASTER_PASSWORD='password';
+
+mysql -u root
+start slave;
+show slave status\G;
+
+
+create database pets;
+create table pets.cats (name varchar(20));
+insert into pets.cats values ('fluffy');
+select * from pets.cats;
+
+mysqldump -uroot -p --all-databases --master-data>masterdump.sql
+
+
+mysql -u root -p
+CHANGE MASTER TO
+MASTER_HOST='172.31.7.132',
+MASTER_USER='repl',
+MASTER_PASSWORD='slavepassword';
+
+
+mysqldump -uroot -p pets > pets.sql
+
+mysql -uroot -p pets < pets.sql
+
+
+
+
+ERROR 1794 (HY000): Slave is not configured or failed to initialize properly. You must at least set --server-id to enable either a master or a slave. Additional error messages can be found in the MySQL error log.
+
+ERROR 1794 (HY000): Slave is not configured or failed to initialize properly. You must at least set --server-id to enable either a master or a slave. Additional error messages can be found in the MySQL error log.
+
+
+create database dogs;
+create table dogs.puppys (name varchar(20));
+insert into dogs.puppys values ('fluffy');
+select * from dogs.puppys;
+
+
+show slave hosts;
+
+
+#service mysql stop
+Shutting down MySQL.. SUCCESS!
+# service mysql start
+Starting MySQL. SUCCESS!
+
+mysql> show variables like 'log_bin';
+
+# mysql -u root -pxxxxxxxxxxx
+# stop slave;
+# CHANGE MASTER TO 
+# MASTER_HOST = 'xxx.xxx.xxx.xxx',
+# MASTER_PORT = 3306,
+# MASTER_USER = 'repl',
+# MASTER_PASSWORD = 'xxxxxxxxxxxxx',
+# MASTER_AUTO_POSITION = 1;
+# start slave;
+# show slave status\G;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 

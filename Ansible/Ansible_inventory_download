@@ -76,7 +76,11 @@ ansible -u ubuntu tag_Name_node -m ping
 ansible -u ubuntu tag_Name_master-tomcatserver -m ping
 
 ansible -m ping -u ubuntu tag_Name_master-tomcatserver
+ansible-playbook -i ec2.py ./nginx.yml -u ubuntu  -vvv
 ansible-playbook -i ec2.py ./playbooks/tomcat.yaml -u ubuntu  -vvv
+
+ansible-playbook -i ec2.py ./nginx.yml -u ubuntu  -vvv -e "my_var=ffceec39f8d4c64d49940b66a8763b9578513d6c"
+
 
 
 4. run below ansible sample playbook 
