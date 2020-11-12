@@ -1,5 +1,5 @@
-see the total users and grep the perticular user
-====================================================
+#see the total users and grep the perticular user
+#====================================================
 
 #!/bin/bash
 file='/etc/passwd'

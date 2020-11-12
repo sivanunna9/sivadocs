@@ -1,0 +1,17 @@
+1.what is ‑z and ‑o in a shell script?
+-z checks the condition for `String is zero length`. For example, if [ -z "$foo" ]
+
+set -f:- Disables globing. In this case, the filename expansions using wildcards or meta-characters will be disabled.
+
+set -v:- This will print the shell script lines as they are read by the shell.
+
+set -x:- This option will display each line after the variable substitution and command expansion, but before execution by the shell. This option is often called shell tracing.
+
+set -n:- This reads all commands and checks the syntax, but does not execute them.
+
+set -e: exits if a command fails
+
+set -u: errors if an variable is referenced before being set
+
+set -x: shows the commands that get run
+
