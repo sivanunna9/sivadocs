@@ -18,7 +18,7 @@ spec:
         tier: frontend
     spec:
       containers:
-      - image: t9:latest 
+      - image: tenderkishore:latest 
         imagePullPolicy: "IfNotPresent"
         name: tomcat
         env:
