@@ -424,7 +424,7 @@ First, what is a webhook? The concept of a webhook is simple. A webhook is an HT
 
 GitHub webhooks in Jenkins are used to trigger the build whenever a developer commits something to the master branch.
 
-referance link:- https://dzone.com/articles/adding-a-github-webhook-in-your-jenkins-pipeline#:~:text=A%20webhook%20is%20an%20HTTP,something%20to%20the%20master%20branch.
+referance link:- https://dzone.com/articles/adding-a-github-webhook-in-your-jenkins-pipeline#:~:text=A%20webhook%20is%20an%20HTTP,something%20to%20the%20master%20branch
 
 
 
