@@ -420,5 +420,11 @@ What is the difference between branch and tag?
 6.git fork
 7.git web-hooks
 
+First, what is a webhook? The concept of a webhook is simple. A webhook is an HTTP callback, an HTTP POST that occurs when something happens through a simple event-notification via HTTP POST.
+
+GitHub webhooks in Jenkins are used to trigger the build whenever a developer commits something to the master branch.
+
+referance link:- https://dzone.com/articles/adding-a-github-webhook-in-your-jenkins-pipeline#:~:text=A%20webhook%20is%20an%20HTTP,something%20to%20the%20master%20branch.
+
 
 
