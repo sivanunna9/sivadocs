@@ -1,0 +1,17 @@
+
+1.Using curl command we can get the Json data using below command
+$ curl -X GET -v -u <username>:<password> -H "Content-Type: application/json"  https://api.bitbucket.org/2.0/repositories/siva0123/test2/commits >>test.json
+
+
+2.After that using below command we can get the latest commit date and name
+$ grep -oP '(?<="date": ")[^"]*'  test.json | head-1
+$ grep -oP '(?<="name": ")[^"]*'  test.json | head-1
+
+3.Using below command we can decode & encode the password
+$ echo ${PASS} | base64 --decode
+$ echo siva| base64
+
+
+Example links:-
+
+ https://stackoverflow.com/questions/3318853/hide-encrypt-password-in-bash-file-to-stop-accidentally-seeing-it

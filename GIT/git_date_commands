@@ -1,0 +1,5 @@
+for branch in `git branch -r | grep -v HEAD`;do echo -e `git show --format="%ci %cr" $branch | head -n 1` \\t$branch; done | sort -r
+
+curl https://api.github.com/repos/sivakiran9/yyy/commits/master 2>&1 | grep '"date"' | tail -n 1
+
+curl https://api.github.com/repos/sivakiran9/yyy/commits/master 2>&1
