@@ -12,3 +12,25 @@
 12. what is booting process
 13. what is runlevels in linux
 14. how to check how many disk for the VM.
+15.what is sudo 
+16.what make sudo waht are the special about sudo
+17.how it is able to become the root user
+18.you use hard link and soft link what is diff b/w hard link & soft link
+19.I have tomcat log file in the log file 4 endry 1st enddry is time stand 2nd endry is ip address of user 3rd endry is url 4th endry is the responce code responce code means https status code ex:-200, 201,400,404... what i want is count of different response code
+20.Explain the booting sequence in linux
+21.what is default file system in red hat server
+22.what is different types of file system types
+23.how do you check the process
+24.how do you check the stack utilization
+26.how do you check the memory utilization
+27.how do you check the ports in servies
+28.can you explain LVM give the architecture of the LVM
+29.Can you tell you logical volume size?
+Ans.) 4MB is default
+30.what is firewall
+31.Can you tell me how you troubleshoot the if you get high load average on a your host
+32.How you troubleshoot if you see high load
+33.If you want to see the CPU utilization on host how you verify
+34.If CPU  utilization is high what you will do next
+35.How you will access the console of a host
+36.
