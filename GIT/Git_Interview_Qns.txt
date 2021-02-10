@@ -322,6 +322,7 @@ $ git diff-tree no-commit-id --name-only -r <SHA>
 45. How to remove a committed change? Or can we remove?
 		$ git reset --hard HEAD~1
 		$ git reset --soft HEAD~1
+                 $ git reset --mixed HEAD~1
 46. How do you lock the branch
   Configuring protected branches
 1.On GitHub, navigate to the main page of the repository.

@@ -127,6 +127,9 @@ you can launch jenkins using below URL:
 18. Where Jenkins stores all plugins data?
 	$JENKINS_HOME/.jenkins/plugins
 
+19.  what is extenstion of jenkins plugin?
+       .hpi --->
+
 19. I want to modify JDK version from 1.7 to 1.8 in 1000 jobs? How do you do it?
 	Jenkins stores all configuration data in .jenkins/jobs/
 	job_name/config.xml
@@ -286,6 +289,99 @@ Test Results Analyzer
 
 45. What is build pipeline? have you created build pipelines?
 
+46. how to change port number for Jenkins installation In Ubuntu 18.04.?
+
+jenkins service
+--------------
+You can go to /etc/default/jenkins and add --httpPort=9999 or whatever port to JENKINS_ARGS.
+Then you should restart Jenkins with sudo service jenkins restart.
+
+jenkins jetty server.
+------------------
+nohup java -jar jenkins.war --port httpPort=9999 & >2&1
+
+in tomcat
+---------
+
+1) Go to conf folder in tomcat installation directory
+
+ e.g. C:\Tomcat 6.0\conf\
+2) Edit following tag in server.xml file
+
+<Connector connectionTimeout="20000" port="8080" protocol="HTTP/1.1" redirectPort="8443"/>
+3) Change the port=8080 value to port=80
+
+4) Save file.
+
+5) Stop your Tomcat and restart it.
+
+
+47. Jenkins scripted pipeline or declarative pipeline
+
+
+
+To quote: "Scripted Pipeline offers a tremendous amount of flexibility and extensibility to Jenkins users. The Groovy learning-curve isn’t typically desirable for all members of a given team, so Declarative Pipeline was created to offer a simpler and more opinionated syntax for authoring Jenkins Pipeline.
+
+The two are both fundamentally the same Pipeline sub-system underneath."
+
+Script Block in Declarative Pipeline
+-----------------------------------
+pipeline {
+    agent any
+    stages {
+        stage('Example') {
+            steps {
+                echo 'Hello World'
+
+                script {
+                    def browsers = ['chrome', 'firefox']
+                    for (int i = 0; i < browsers.size(); ++i) {
+                        echo "Testing the ${browsers[i]} browser"
+                    }
+                }
+            }
+        }
+    }
+Conditional Statement if, Scripted Pipeline
+------------------------------------------
+node {
+    stage('Example') {
+        if (env.BRANCH_NAME == 'master') {
+            echo 'I only execute on the master branch'
+        } else {
+            echo 'I execute elsewhere'
+        }
+    }
+}
+}
+
+Read more here:https://jenkins.io/doc/book/pipeline/syntax/#compare
+
+48. How to reset Jenkins security settings from the command line?
+
+The simplest solution is to completely disable security - change true to false in /var/lib/jenkins/config.xml file.
+
+<useSecurity>true</useSecurity>
+Then just restart Jenkins, by
+
+sudo service jenkins restart
+And then go to admin panel and set everything once again.
+
+If you in case are running your Jenkins inside k8s pod from a docker, which is my case and can not run service command, then you can just restart Jenkins by deleting the pod:
+
+kubectl delete pod <jenkins-pod-name>
+Once the command was issued, the k8s will terminate the old pod and start a new one.
+
+
+
+One other way would be to manually edit the configuration file for your user (e.g. /var/lib/jenkins/users/username/config.xml) and update the contents of passwordHash:
+
+<passwordHash>#jbcrypt:$2a$10$razd3L1aXndFfBNHO95aj.IVrFydsxkcQCcLmujmFQzll3hcUrY7S</passwordHash>
+Once you have done this, just restart Jenkins and log in using this password:
+
+test
+
+﻿
 46.
 How do you set up the crontab?
 can you explain crontab syntax?
